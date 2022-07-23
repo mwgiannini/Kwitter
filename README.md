@@ -1,2 +1,2 @@
-# TwitterClone
-A twitter clone using MySQL and React.
+# Kwitter
+A social media clone using MySQL and React.
