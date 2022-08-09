@@ -7,6 +7,7 @@ import {
   Route,
 } from "react-router-dom";
 import MainPage from './pages/mainPage';
+import MenuAppBar from './components/navbar';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       </header> */}
 
       <Router>
+      <MenuAppBar />
         <Routes>
           <Route path='/' element={<MainPage />} />
         </Routes>
