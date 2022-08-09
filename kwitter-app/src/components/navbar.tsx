@@ -7,14 +7,16 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import UserButton from './userButton';
-import MainMenu from './menu';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
+import { useNavigate } from "react-router-dom";
+import IconButton from '@mui/material/IconButton';
 
 
 export default function MenuAppBar() {
     const [auth, setAuth] = React.useState(true);
+    const navigate = useNavigate();
 
     // const isLoggedIn = APIfunc.getStorage("isLoggedIn")
     // function CheckAdmin () {
@@ -22,31 +24,30 @@ export default function MenuAppBar() {
     // }
 
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setAuth(event.target.checked);
+    };
+
+    const BackToHomeButton = () => (
+        navigate('/', { replace: false })
+    );
 
     return (
         <Box sx={{ flexGrow: 1 }}>
             <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={auth}
+                            onChange={handleChange}
+                            aria-label="login switch"
+                        />
+                    }
+                    label={auth ? 'Logout' : 'Login'}
+                />
+            </FormGroup>
             <AppBar position="static" >
                 <Toolbar>
-                    {auth===true ?  (
-                        <div>
-                            <MainMenu />
-                        </div>
-                    ): (<></>)}
                     <Typography
                         variant="h6"
                         noWrap
@@ -56,7 +57,7 @@ export default function MenuAppBar() {
                     >
                         Kwitter
                     </Typography>
-                    <UserButton loggedIn={auth}/>
+                    <UserButton loggedIn={auth} />
 
                 </Toolbar>
             </AppBar>
