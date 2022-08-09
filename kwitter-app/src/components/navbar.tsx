@@ -52,7 +52,6 @@ export default function MenuAppBar() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
                         sx={{ flexGrow: 1 }}
                     >
                         Kwitter
