@@ -1,5 +1,5 @@
 import React from "react";
-import Kweet from '../components/kweet';
+import Kweets from '../components/kweets';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
@@ -33,7 +33,7 @@ function MainPage() {
                 <Typography variant='h1'>Not logged in</Typography>
             }
 
-            <Kweet/> 
+            <Kweets/>
         </>
     );
 }
