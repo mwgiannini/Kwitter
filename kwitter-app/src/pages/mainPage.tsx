@@ -1,11 +1,11 @@
 import React from "react";
-
+import Kweet from '../components/kweet';
 
 function MainPage(){
     return (
-        <div>
-            This is the homepage.
-        </div>
+        <>
+        <Kweet/>
+        </>
     );  
 }
 export default MainPage;
