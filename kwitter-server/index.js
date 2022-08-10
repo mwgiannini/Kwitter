@@ -18,3 +18,15 @@ app.get("/api/getTimeline/:username", (req,res)=>{
         res.send(result)
         });   
 });
+
+// Route to login
+app.get("/api/login/:username", (req,res)=>{
+    const username = req.params.username;
+     db.query("CALL timeline(?)", username, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        } 
+        res.send(result)
+        });   
+});
