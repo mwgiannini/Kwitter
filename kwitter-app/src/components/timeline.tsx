@@ -1,9 +1,11 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Kweet from './kweet'
 
-export default function Kweets() {
+export default function Timeline() {
+
+  const [timeline, setTimeline] = React.useState([])
+  React.useEffect(() => { })
 
   return (
       <Paper sx={{
@@ -11,7 +13,9 @@ export default function Kweets() {
         marginRight: 'auto'
       }}
       >
-          <Kweet></Kweet>
+      
+      
+
       </Paper>
   );
 }
