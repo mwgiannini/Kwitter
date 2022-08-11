@@ -21,8 +21,6 @@ app.get("/api/login/:info", (req,res)=>{
         reply.status = 400;
         reply.info = {loggedIn: false, message:'network error'}
         }
-        console.log('result' + result[0].password);
-        console.log('request' + data.password);
         if (result[0].password === data.password){
             console.log("correct")
             reply.status = 200
