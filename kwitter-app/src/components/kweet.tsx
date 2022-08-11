@@ -12,13 +12,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-export default function Kweet() {
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
+export default function Kweet(props:any) {
   return (
     <Card sx={{ width: .8, marginLeft: 'auto', marginRight: 'auto' }}>
       <CardHeader
@@ -32,14 +26,12 @@ export default function Kweet() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={props.username}
+        subheader={props.post_time}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the mussels,
-          if you like.
+          {props.message}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
