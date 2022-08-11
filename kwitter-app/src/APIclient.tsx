@@ -3,7 +3,8 @@ import axios from 'axios'
 
 var APIclient  = {
     async login(data : Object){
-        return await axios.post('/api/login', data) //this is where we send the request 
+        let info = JSON.stringify(data)
+        return await axios.get(`http://localhost:10001/api/login/${info}`) //this is where we send the request 
             .then( (res) => {
                 return res
             })
@@ -12,3 +13,4 @@ var APIclient  = {
     },
 }
 
+export default APIclient;
