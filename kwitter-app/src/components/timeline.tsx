@@ -34,7 +34,7 @@ export default function Timeline() {
 
   React.useEffect(()=>{
     let user = helper.getStorage('user')
-    APIClient.getTimeline(user).then(
+    APIClient.getTimeline(user!).then(
       (res) => {
         console.log(res)
         setTimeline(res.data.data[0])
