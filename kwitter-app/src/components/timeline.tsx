@@ -15,6 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import AddIcon from '@mui/icons-material/Add';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import * as helper from '../helper'
 
 import APIClient from '../APIclient'
 
@@ -31,8 +32,9 @@ const StyledFab = styled(Fab)({
 export default function Timeline() {
   const [timeline, setTimeline] = React.useState<Array<Object>>([])
 
-  React.useEffect(()=>{ 
-    APIClient.getTimeline('mw').then(
+  React.useEffect(()=>{
+    let user = helper.getStorage('user')
+    APIClient.getTimeline(user).then(
       (res) => {
         console.log(res)
         setTimeline(res.data.data[0])

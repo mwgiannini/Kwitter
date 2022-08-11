@@ -77,6 +77,7 @@ function Login(props: any) {
             if (res.data.info.loggedIn === true) {
             Object.freeze(APIclient)
             helper.setStorage('loggedIn', true)
+            helper.setStorage('user', data.username)
             navigate('/')
             }
             else updateAlert(res.data.info.message)
