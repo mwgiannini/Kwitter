@@ -4,6 +4,7 @@ import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import { Typography } from "@mui/material";
+import APIclient from "../APIclient";
 
 
 function MainPage() {
@@ -12,6 +13,11 @@ function MainPage() {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAuth(event.target.checked);
     };
+    let data = {username:'frank', password:'123456'};
+    APIclient.login(data).then((res) => {
+        console.log(res)
+        Object.freeze(APIclient)
+    })
 
     return (
         <>
