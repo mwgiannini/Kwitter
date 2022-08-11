@@ -47,7 +47,7 @@ export default function Timeline() {
       <CssBaseline />
       <Paper square sx={{ pb: '50px' }}>
         <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
-          Inbox
+          Timeline
         </Typography>
         <List sx={{ mb: 2 }}>
           {timeline.map((val:any, index:number) => (
