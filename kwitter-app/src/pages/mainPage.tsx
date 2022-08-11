@@ -20,7 +20,6 @@ function MainPage() {
 
     return (
         <>
-                <Typography variant="h1" >logged in</Typography>
             <Timeline/>
         </>
     );
