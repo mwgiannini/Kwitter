@@ -12,7 +12,7 @@ import UserButton from './userButton';
 export default function MenuAppBar() {
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" >
+            <AppBar position="static" color='primary'>
                 <Toolbar>
                     <Typography
                         variant="h6"

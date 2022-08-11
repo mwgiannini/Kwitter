@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import MainPage from './pages/mainPage';
 import MenuAppBar from './components/navbar';
+import Login from './components/login'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <MenuAppBar />
         <Routes>
           <Route path='/' element={<MainPage />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </Router>
     </div>
