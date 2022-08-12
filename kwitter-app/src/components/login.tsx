@@ -33,7 +33,7 @@ function Login(props: any) {
         password: string;
         showPassword: boolean;
     }
-
+    
 
     const [values, setValues] = useState<State>({
         username: '',
@@ -68,17 +68,14 @@ function Login(props: any) {
             password: values.password
         };
 
-
-        console.log(data)
-
     APIclient.login(data).then((res) => {
-        console.log(res.data)
         if (res.data.status === 200) {
             if (res.data.info.loggedIn === true) {
             Object.freeze(APIclient)
             helper.setStorage('loggedIn', true)
             helper.setStorage('user', data.username)
             navigate('/')
+            window.location.reload()
             }
             else updateAlert(res.data.info.message)
         }

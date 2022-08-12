@@ -5,21 +5,41 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 import MainPage from './pages/mainPage';
 import MenuAppBar from './components/navbar';
-import Login from './components/login'
+import Login from './components/login';
+import { getStorage } from './helper';
 
 function App() {
+  const [auth, setAuth] = React.useState<any>(false);
+
+
+  const ProtectedRoute = (props:any) => {
+    if (JSON.parse(getStorage('loggedIn')!) !== true) {
+      console.log(JSON.parse(getStorage('loggedIn')!))
+      return <Navigate to="/login" replace />;
+    }
+    return props.children;
+  };
+
   return (
     <div className="App">
-      <Router>
-      <MenuAppBar />
-        <Routes>
-          <Route path='/' element={<MainPage />} />
-          <Route path='/login' element={<Login />} />
-        </Routes>
-      </Router>
+        <Router>
+          <MenuAppBar />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <MainPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path='/login' element={<Login />} />
+          </Routes>
+        </Router>
     </div>
   );
 }
