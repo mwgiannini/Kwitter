@@ -18,33 +18,32 @@ const StyledFab = styled(Fab)({
 });
 
 export default function KweetList(props : any) {
-  // function compare( a : any, b : any)
-  // {
-  //   let a_time, b_time
+  let compare = ( a : any, b : any) =>
+  {
+    let a_time, b_time
+    if ('rekweet_time' in a){
+      a_time = a.rekweet_time
+    }
+    else{
+      a_time = a.post_time
+    }
+    if ('rekweet_time' in b){
+      b_time = b.rekweet_time
+    }
+    else{
+      b_time = b.post_time
+    }
 
-  //   if ('rekweet_time' in a){
-  //     a_time = a.rekweet_time
-  //   }
-  //   else{
-  //     a_time = a.post_time
-  //   }
-  //   if ('rekweet_time' in b){
-  //     b_time = b.rekweet_time
-  //   }
-  //   else{
-  //     b_time = b.post_time
-  //   }
+    if ( a_time > b_time ){
+      return -1;
+    }
+    if ( a_time < b_time ){
+      return 1;
+    }
+    return 0;
+  }
 
-  //   if ( a_time < b_time ){
-  //     return -1;
-  //   }
-  //   if ( a_time > b_time ){
-  //     return 1;
-  //   }
-  //   return 0;
-  // }
-
-  // props.sort(compare);
+  props.list.sort(compare)
 
   return (
     <React.Fragment>

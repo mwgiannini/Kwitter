@@ -27,118 +27,36 @@ function fixTimesIn(kweetList){
     }
 }
 
+// --------------------------------------- //
+// ------ ROUTES THAT RETURN KWEETS ------ //
+// --------------------------------------- //
+
 // Route to get a users timeline
 app.get("/api/getTimeline/:username", (req,res)=>{
     const username = req.params.username;
-     db.query("CALL timeline(?)", username, 
-     (err,result)=>{
-        fixTimesIn(result[0])
-        if(err) {
-        console.log(err)
+     db.query(`CALL get_following_posts('${username}')`, 
+     (err1,result1)=>{
+        if(err1) {
+        console.log(err1)
         data.status = 400
         }
-        else { data.status = 200 }
-        data.body = result
-        res.send(data)
-        });   
-});
-
-// Route to get a users profile picture
-app.get("/api/getProfilePicture/:username", (req,res)=>{
-    const username = req.params.username;
-     db.query("SELECT profile_pic FROM user WHERE username=?", username, 
-     (err,result)=>{
-        if(err) {
-        console.log(err)
-        data.status = 400
-        }
-        else { data.status = 200 }
-        data.body = result
-        res.send(data)
-        });   
-});
-
-// Route to favorite/unfavorite a post
-app.get("/api/favorite/:info", (req,res)=>{
-    const props = JSON.parse(req.params.info);
-     db.query(`CALL toggle_favorite('${props.username}', '${props.post_time}', '${props.favorite_username}')`, 
-     (err,result)=>{
-        if(err) {
-        console.log(err)
-        data.status = 400
-        }
-        else { data.status = 200 }
-        data.body = result
-        res.send(data)
-        });   
-});
-
-
-// Route to login
-app.get("/api/login/:info", (req,res)=>{
-    const request = JSON.parse(req.params.info);
-     db.query(`SELECT password FROM user WHERE username = '${request.username}';`,
-     (err,result)=>{
-        if(err) {
-        console.log(err)
-        data.status = 400;
-        data.body = {loggedIn: false, message:'network error'}
-        }
-        if (result[0].password === request.password){
-            console.log(`${request.username} has logged in`)
-            data.status = 200
-            data.body = {loggedIn: true, message:''}
-        }
         else {
-            data.status = 200;
-            data.body = {loggedIn: false, message:'wrong password'}
+            db.query(`CALL get_following_rekweets('${username}')`, 
+            (err2,result2)=>{
+                if(err2) {
+                    console.log(err2)
+                    data.status = 400
+                }
+                else{
+                    data.status = 200
+                    fixTimesIn(result1[0])
+                    fixTimesIn(result2[0])
+                    data.body = result1[0].concat(result2[0])
+                    console.log(data.body)
+                }
+            })
         }
-        res.send(JSON.stringify(data))
-        });   
-});
-
-// Route to sign up
-app.get("/api/signUp/:info", (req,res)=>{
-    const request = JSON.parse(req.params.info);
-    console.log(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`)
-     db.query(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`,
-     (err,result)=>{
-        if(err) {
-        console.log(err)
-        data.status = 400;
-        data.body = {message:err.sqlMessage}
-        }
-        else {
-            data.status = 200;
-        }
-        res.send(JSON.stringify(data))
-        });   
-});
-
-// Route to get users
-app.get("/api/getUsers/:info", (req,res)=>{
-    const request = JSON.parse(req.params.info);
-    let query;
-    if (request.request == 'follower'){
-        query = `SELECT follower FROM follow WHERE following = '${request.user}';`
-    }
-    else {
-        query = `SELECT following FROM follow WHERE follower = '${request.user}';`
-    }
-    console.log(query)
-     db.query(query,
-     (err,result)=>{
-        if(err) {
-        console.log(err)
-        data.status = 400;
-        data.body = {message:'network error'}
-        }
-        else {
-            data.status = 200;
-            data.body = {result}
-        }
-        console.log(JSON.stringify(data))
-        res.send(JSON.stringify(data))
+        res.send(data)
         });   
 });
 
@@ -200,6 +118,114 @@ app.get("/api/getRekweets/:username", (req,res)=>{
     db.query(query, 
      (err,result)=>{
         fixTimesIn(result)
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
+
+
+// --------------------------------------- //
+// ------ ROUTES THAT GET OTHER ---------- //
+// --------------------------------------- //
+
+// Route to get a users profile picture
+app.get("/api/getProfilePicture/:username", (req,res)=>{
+    const username = req.params.username;
+     db.query("SELECT profile_pic FROM user WHERE username=?", username, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
+
+// Route to get following/followers
+app.get("/api/getFollow/:info", (req,res)=>{
+    const request = JSON.parse(req.params.info);
+    let query;
+    if (request.request == 'follower'){
+        query = `SELECT follower FROM follow WHERE following = '${request.user}';`
+    }
+    else {
+        query = `SELECT following FROM follow WHERE follower = '${request.user}';`
+    }
+    console.log(query)
+     db.query(query,
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400;
+        data.body = {message:'network error'}
+        }
+        else {
+            data.status = 200;
+            data.body = {result}
+        }
+        console.log(JSON.stringify(data))
+        res.send(JSON.stringify(data))
+        });   
+});
+
+// Route to login
+app.get("/api/login/:info", (req,res)=>{
+    const request = JSON.parse(req.params.info);
+     db.query(`SELECT password FROM user WHERE username = '${request.username}';`,
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400;
+        data.body = {loggedIn: false, message:'network error'}
+        }
+        if (result[0].password === request.password){
+            console.log(`${request.username} has logged in`)
+            data.status = 200
+            data.body = {loggedIn: true, message:''}
+        }
+        else {
+            data.status = 200;
+            data.body = {loggedIn: false, message:'wrong password'}
+        }
+        res.send(JSON.stringify(data))
+        });   
+});
+
+
+// --------------------------------------- //
+// ------ ROUTES THAT UPDATE DB ---------- //
+// --------------------------------------- //
+
+// Route to sign up
+app.get("/api/signUp/:info", (req,res)=>{
+    const request = JSON.parse(req.params.info);
+    console.log(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`)
+     db.query(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`,
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400;
+        data.body = {message:err.sqlMessage}
+        }
+        else {
+            data.status = 200;
+        }
+        res.send(JSON.stringify(data))
+        });   
+});
+
+// Route to favorite/unfavorite a post
+app.get("/api/favorite/:info", (req,res)=>{
+    const props = JSON.parse(req.params.info);
+     db.query(`CALL toggle_favorite('${props.username}', '${props.post_time}', '${props.favorite_username}')`, 
+     (err,result)=>{
         if(err) {
         console.log(err)
         data.status = 400
