@@ -13,9 +13,6 @@ import Login from './components/login';
 import { getStorage } from './helper';
 
 function App() {
-  const [auth, setAuth] = React.useState<any>(false);
-
-
   const ProtectedRoute = (props:any) => {
     if (JSON.parse(getStorage('loggedIn')!) !== true) {
       console.log(JSON.parse(getStorage('loggedIn')!))
