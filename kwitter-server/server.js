@@ -82,7 +82,7 @@ app.get("/api/login/:info", (req,res)=>{
 });
 
 
-// Route to login
+// Route to get users
 app.get("/api/getUsers/:info", (req,res)=>{
     const request = JSON.parse(req.params.info);
     let query;
