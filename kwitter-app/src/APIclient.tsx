@@ -19,7 +19,8 @@ var APIclient = {
             })
             .catch((err) => {return err}
         );  
-    }
+    },
+
 }
 
 export default APIclient;
