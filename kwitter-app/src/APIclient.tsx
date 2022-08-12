@@ -47,6 +47,16 @@ var APIclient = {
         );  
     },
 
+    async signUp(params : Object){
+        let info = JSON.stringify(params)
+        return await axios.get(url('signUp', info)) //this is where we send the request 
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );  
+    },
+
     async getUsers(params : Object){
         let info = JSON.stringify(params)
         return await axios.get(url('getUsers', info)) //this is where we send the request 

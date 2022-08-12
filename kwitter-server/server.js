@@ -91,6 +91,23 @@ app.get("/api/login/:info", (req,res)=>{
         });   
 });
 
+// Route to login
+app.get("/api/signUp/:info", (req,res)=>{
+    const request = JSON.parse(req.params.info);
+    console.log(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`)
+     db.query(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`,
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400;
+        data.body = {message:err.sqlMessage}
+        }
+        else {
+            data.status = 200;
+        }
+        res.send(JSON.stringify(data))
+        });   
+});
 
 // Route to get users
 app.get("/api/getUsers/:info", (req,res)=>{
@@ -163,7 +180,7 @@ app.get("/api/getUserKweets/:username", (req,res)=>{
 app.get("/api/getRekweets/:username", (req,res)=>{
     const username = req.params.username;
     let query = 
-    `SELECT username, post_time, message FROM rekweet 
+    `SELECT rekweet_username as username, username as op, post_time, message, rekweet_time FROM rekweet 
     JOIN
     kweet
     ON
@@ -171,7 +188,7 @@ app.get("/api/getRekweets/:username", (req,res)=>{
     AND
     kweet_post_time = post_time
     AND
-    rekweet_username = '${username}';`  
+    rekweet_username = 'f${username}';`  
     db.query(query, 
      (err,result)=>{
         if(err) {
