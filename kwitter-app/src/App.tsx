@@ -6,37 +6,34 @@ import {
   Routes,
   Route,
   Navigate,
+  Outlet,
 } from "react-router-dom";
-import MainPage from './pages/mainPage';
-import MenuAppBar from './components/navbar';
-import Login from './components/login';
+import MenuAppBar from './components/navbar/navbar';
 import { getStorage } from './helper';
+import MainPage from './pages/mainPage';
+import Login from './components/login';
+import UserProfile from './pages/userProfile';
 
 function App() {
-  const ProtectedRoute = (props:any) => {
+  const ProtectedRoute = (props: any) => {
     if (JSON.parse(getStorage('loggedIn')!) !== true) {
-      console.log(JSON.parse(getStorage('loggedIn')!))
       return <Navigate to="/login" replace />;
     }
-    return props.children;
+    return <Outlet />;
   };
 
   return (
     <div className="App">
-        <Router>
-          <MenuAppBar />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <MainPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route path='/login' element={<Login />} />
-          </Routes>
-        </Router>
+      <Router>
+        <MenuAppBar />
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/userprofile" element={<UserProfile />} />
+          </Route>
+          <Route path='/login' element={<Login />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

@@ -60,16 +60,16 @@ app.get("/api/favorite/:props", (req,res)=>{
 
 // Route to login
 app.get("/api/login/:info", (req,res)=>{
-    const data = JSON.parse(req.params.info);
-     db.query(`SELECT password FROM user WHERE username = '${data.username}';`,
+    const request = JSON.parse(req.params.info);
+     db.query(`SELECT password FROM user WHERE username = '${request.username}';`,
      (err,result)=>{
         if(err) {
         console.log(err)
         data.status = 400;
         data.body = {loggedIn: false, message:'network error'}
         }
-        if (result[0].password === data.password){
-            console.log(`${data.username} has logged in`)
+        if (result[0].password === request.password){
+            console.log(`${request.username} has logged in`)
             data.status = 200
             data.body = {loggedIn: true, message:''}
         }
@@ -80,6 +80,35 @@ app.get("/api/login/:info", (req,res)=>{
         res.send(JSON.stringify(data))
         });   
 });
+
+
+// Route to login
+app.get("/api/getUsers/:info", (req,res)=>{
+    const request = JSON.parse(req.params.info);
+    let query;
+    if (request.request == 'follower'){
+        query = `SELECT follower FROM follow WHERE following = '${request.user}';`
+    }
+    else {
+        query = `SELECT following FROM follow WHERE follower = '${request.user}';`
+    }
+    console.log(query)
+     db.query(query,
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400;
+        data.body = {message:'network error'}
+        }
+        else {
+            data.status = 200;
+            data.body = {result}
+        }
+        console.log(JSON.stringify(data))
+        res.send(JSON.stringify(data))
+        });   
+});
+
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on ${PORT}`)
