@@ -9,7 +9,8 @@ import Typography from '@mui/material/Typography';
 import UserButton from './userButton';
 import IconButton from '@mui/material/IconButton';
 import HomeIcon from '@mui/icons-material/Home';
-
+import Container from '@mui/material/Container'
+import KwitterTitle from "../logo/KwitterTitle.png"
 
 export default function MenuAppBar() {
     return (
@@ -19,14 +20,10 @@ export default function MenuAppBar() {
                     <IconButton href="/">
                         <HomeIcon fontSize="large"/>
                     </IconButton>
-                    <Typography
-                        variant="button"
-                        component="a"
-                        href="/"
-                        sx={{ flexGrow: 1, textDecoration: 'none', fontSize: '50px', color: '#005ea6' }}
-                    >
-                        Kwitter
-                    </Typography>
+                    <Container>
+                        <img src={KwitterTitle} alt='kwitter title'
+                            style={{ maxHeight: "50px", margin: 0 }}/>
+                    </Container>
                     <UserButton />
                 </Toolbar>
             </AppBar>
