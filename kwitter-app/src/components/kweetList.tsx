@@ -28,10 +28,6 @@ export default function KweetList(props : any) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Paper square sx={{ pb: '50px' }}>
-        <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
-          Timeline
-        </Typography>
         <List sx={{ mb: 2 }}>
           {props.list.map((val:any, index:number) => (
             <React.Fragment key={index}>
@@ -41,8 +37,7 @@ export default function KweetList(props : any) {
             </React.Fragment>
           ))}
         </List>
-      </Paper>
-      <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
+      {/* <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
           <StyledFab color="secondary" aria-label="add">
             <AddIcon />
@@ -52,7 +47,7 @@ export default function KweetList(props : any) {
             <MoreIcon />
           </IconButton>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
     </React.Fragment>
   );
 }

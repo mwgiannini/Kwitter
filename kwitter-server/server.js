@@ -119,6 +119,70 @@ app.get("/api/getUsers/:info", (req,res)=>{
         });   
 });
 
+// Route to get a users favorites
+app.get("/api/getFavorites/:username", (req,res)=>{
+    const username = req.params.username;
+    let query = 
+    `SELECT username, post_time, message, favorite_username FROM favorite
+    JOIN kweet
+    ON
+    kweet_username = username
+    AND
+    kweet_post_time = post_time
+    AND favorite_username = '${username}';`
+     db.query(query, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
+
+// Route to get a users kweets
+app.get("/api/getUserKweets/:username", (req,res)=>{
+    const username = req.params.username;
+    let query = 
+    `SELECT * FROM kweet WHERE username = '${username}';`
+     db.query(query, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
+
+// Route to get a users rekweets
+app.get("/api/getRekweets/:username", (req,res)=>{
+    const username = req.params.username;
+    let query = 
+    `SELECT username, post_time, message FROM rekweet 
+    JOIN
+    kweet
+    ON
+    kweet_username = username
+    AND
+    kweet_post_time = post_time
+    AND
+    rekweet_username = '${username}';`  
+    db.query(query, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on ${PORT}`)
