@@ -10,45 +10,50 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { getStorage } from "../helper";
 
 
-export default function UserList() {
-    const [users, setUsers] = useState([]);
+export default function UserList(props:any) {
+    const [users, setUsers] = useState<object[]>([]);
 
-    // const getUsers = () => {
-    //     APIclient.getRegUsers().then((res) => {
-    //         if (res.status === 200) {
-    //             Object.freeze(APIclient)
-    //             let reg_users = res.data.info
-    //             setUsers(reg_users);
-    //             setFilterUsers(reg_users);
-    //         } else {
-    //         }
-    //     })
-    // };
+    let params = {
+        request: props.type,
+        user: getStorage('user'),
+    }
+
+    const getUsers = () => {
+        APIclient.getUsers(params).then((res) => {
+            if (res.status === 200) {
+                Object.freeze(APIclient)
+                setUsers(res.data.body.result)
+            } else {
+            }
+        })
+    };
     useEffect(getUsers, []);
 
+    const UserCell = (user: any) => {
+        return (
+            <TableCell>
+                {user.user[props.type]}
+            </TableCell>
+        );
+    }
+
     return (
-        <div style={{padding:"50px"}}>
-            <Container maxWidth="md">
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <Table aria-label="simple table">
                         <TableBody>
                             {users.map((user, index) => (
-                                // <UserRow
-                                //     key={user['UserID']}
-                                //     user={user}
-                                // />
                                 <TableRow>
-                                    <TableCell>
-                                        hellp
-                                    </TableCell>
+                                    <UserCell 
+                                        key={index}
+                                        user={user}
+                                    />
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </Container>
-        </div>
     );
 }

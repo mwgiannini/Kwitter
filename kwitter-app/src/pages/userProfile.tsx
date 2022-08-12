@@ -97,10 +97,10 @@ export default function UserProfile() {
                         Item Two
                     </TabPanel>
                     <TabPanel value={value} index={2}>
-                       <UserList/>
+                       <UserList type='follower'/>
                     </TabPanel>
                     <TabPanel value={value} index={3}>
-                        Item Four
+                        <UserList type='following'/>
                     </TabPanel>
                 </Box>
                 <Button onClick={CloseUserProfile} variant='outlined'>Back</Button>

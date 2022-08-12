@@ -17,7 +17,6 @@ import UserProfile from './pages/userProfile';
 function App() {
   const ProtectedRoute = (props: any) => {
     if (JSON.parse(getStorage('loggedIn')!) !== true) {
-      console.log(JSON.parse(getStorage('loggedIn')!))
       return <Navigate to="/login" replace />;
     }
     return <Outlet />;
