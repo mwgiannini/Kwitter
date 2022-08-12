@@ -12,11 +12,21 @@ let data = {
     body : any=null
 }
 
+function parseTime(time){
+    let parse = JSON.stringify(time).split('T')
+    return (parse[0] + " " + parse[1].split('.')[0]).substring(1)
+}
+
 // Route to get a users timeline
 app.get("/api/getTimeline/:username", (req,res)=>{
     const username = req.params.username;
      db.query("CALL timeline(?)", username, 
      (err,result)=>{
+        for(const kweet of result[0]){
+            kweet.post_time = parseTime(kweet.post_time)
+        }
+        console.log(result)
+
         if(err) {
         console.log(err)
         data.status = 400
@@ -43,9 +53,9 @@ app.get("/api/getProfilePicture/:username", (req,res)=>{
 });
 
 // Route to favorite/unfavorite a post
-app.get("/api/favorite/:props", (req,res)=>{
-    const props = req.params.props;
-     db.query(`CALL toggle_favorite(${props.username}, ${props.post_time}, ${props.favorite_username})`, 
+app.get("/api/favorite/:info", (req,res)=>{
+    const props = JSON.parse(req.params.info);
+     db.query(`CALL toggle_favorite('${props.username}', '${props.post_time}', '${props.favorite_username}')`, 
      (err,result)=>{
         if(err) {
         console.log(err)

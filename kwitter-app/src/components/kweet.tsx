@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import APIclient from '../APIclient'
+import { getStorage } from '../helper'
 
 export default function Kweet(props : any) {
     return (
@@ -28,11 +30,21 @@ export default function Kweet(props : any) {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
+                <IconButton onClick={
+                        () => {
+                            let params = {
+                                username : props.username,
+                                post_time : props.post_time,
+                                favorite_username : getStorage("user")
+                            }
+                            
+                            APIclient.toggleFavorite(params)
+                        }
+                    } aria-label="add to favorites">
+                    <FavoriteIcon />
                 </IconButton>
                 <IconButton aria-label="share">
-                <ShareIcon />
+                    <ShareIcon />
                 </IconButton>
                 <Typography variant="caption" color="text.secondary" sx={{paddingLeft:'10px'}}>
                     {props.post_time}
