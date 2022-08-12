@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { getStorage, setStorage } from '../../helper';
 import Avatar from '@mui/material/Avatar';
+import UserCard from '../userCard';
 
 
 export default function UserButton(props: any) {
@@ -59,12 +60,13 @@ export default function UserButton(props: any) {
 
                 <div>
                     <MenuItem onClick={userProfile}>
-                        <Avatar 
+                        {/* <Avatar 
                             alt="Profile Picture" 
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnAkz1qxG3c2s0xyDbqGvwo9LwNyitI4i6Tw&usqp=CAU" 
                             sx={{marginRight :'10px'}}
                             />
-                        {getStorage('user')}
+                        {getStorage('user')} */}
+                        <UserCard username={getStorage('user')} />
                     </MenuItem>
                     <MenuItem onClick={logout}>Log out</MenuItem>
                 </div>

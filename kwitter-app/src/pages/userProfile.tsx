@@ -108,49 +108,6 @@ export default function UserProfile() {
         setValue(newValue);
     };
 
-    // return (
-    //     <Card >
-    //         <CardHeader
-    //             avatar={
-    //                 <UserCard username={getStorage('user')} />
-    //             }
-    //         />
-    //         <CardContent>
-    //             <Box
-    //                 sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
-    //             >
-    //                 <Tabs
-    //                     orientation="vertical"
-    //                     value={value}
-    //                     onChange={handleChange}
-    //                     aria-label="Vertical tabs example"
-    //                     sx={{ borderRight: 1, borderColor: 'divider' }}
-    //                 >
-    //                     <Tab label="Posts" {...a11yProps(0)} />
-    //                     <Tab label="Favorites" {...a11yProps(1)} />
-    //                     <Tab label="Followers" {...a11yProps(2)} />
-    //                     <Tab label="Following" {...a11yProps(3)} />
-    //                 </Tabs>
-    //                 <TabPanel value={value} index={0}>
-    //                     Item One
-    //                 </TabPanel>
-    //                 <TabPanel value={value} index={1}>
-    //                     <GetFavorites />
-    //                 </TabPanel>
-    //                 <TabPanel value={value} index={2}>
-    //                     <UserList type='follower' />
-    //                 </TabPanel>
-    //                 <TabPanel value={value} index={3}>
-    //                     <UserList type='following' />
-    //                 </TabPanel>
-    //             </Box>
-    //         </CardContent>
-    //         <CardActions>
-    //             <Button onClick={CloseUserProfile} variant='outlined'>Back</Button>
-    //         </CardActions>
-    //     </Card>
-    // );
-
     return (
         <>
             <UserCard username={getStorage('user')} />
