@@ -68,10 +68,7 @@ function Login(props: any) {
             password: values.password
         };
 
-        console.log(params)
-
     APIclient.login(params).then((res) => {
-        console.log(res)
         if (res.data.status === 200) {
             if (res.data.body.loggedIn === true) {
             Object.freeze(APIclient)
@@ -83,21 +80,7 @@ function Login(props: any) {
             else updateAlert(res.data.body.message)
         }
         else updateAlert('Network Error')
-    })
-
-        // APIclient.login(data).then((res) => {
-        //     helper.setStorage("res", res)
-
-        //     if (res.status === 200) {
-        //         Object.freeze(APIclient) // DONT REMOVE - WILL BERAK ALL API REQUEST
-        //         // navigate('/')
-        //     }
-        //     else {
-        //         // updateAlert(res.response.data.message)
-        //     }
-
-        // });
-    }
+    })}
 
     const updateAlert = (err: string) => {
         setAlertMessage(err)
