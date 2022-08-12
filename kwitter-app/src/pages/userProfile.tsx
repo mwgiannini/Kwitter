@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStorage } from "../helper";
 import APIclient from "../APIclient";
+import UserCard from "../components/userCard";
 import UserList from "../components/userList";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -10,7 +11,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import Avatar from '@mui/material/Avatar';
+import CardContent from '@mui/material/CardContent';
+
 
 
 export default function UserProfile() {
@@ -64,45 +66,42 @@ export default function UserProfile() {
 
     return (
         <Container>
-            <Card sx={{ marginLeft:'100px', marginRight:'100px' }}>
+            <Card sx={{ marginLeft: '100px', marginRight: '100px' }}>
                 <CardHeader
                     avatar={
-                        <Avatar
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnAkz1qxG3c2s0xyDbqGvwo9LwNyitI4i6Tw&usqp=CAU" 
-                        >
-                            R
-                        </Avatar>
+                        <UserCard username={getStorage('user')} />
                     }
-                    title="Shrimp and Chorizo Paella"
                 />
-                <Box
-                    sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
-                >
-                    <Tabs
-                        orientation="vertical"
-                        value={value}
-                        onChange={handleChange}
-                        aria-label="Vertical tabs example"
-                        sx={{ borderRight: 1, borderColor: 'divider' }}
+                <CardContent>
+                    <Box
+                        sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
                     >
-                        <Tab label="Posts" {...a11yProps(0)} />
-                        <Tab label="Favorites" {...a11yProps(1)} />
-                        <Tab label="Followers" {...a11yProps(2)} />
-                        <Tab label="Following" {...a11yProps(3)} />
-                    </Tabs>
-                    <TabPanel value={value} index={0}>
-                        Item One
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        Item Two
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                       <UserList type='follower'/>
-                    </TabPanel>
-                    <TabPanel value={value} index={3}>
-                        <UserList type='following'/>
-                    </TabPanel>
-                </Box>
+                        <Tabs
+                            orientation="vertical"
+                            value={value}
+                            onChange={handleChange}
+                            aria-label="Vertical tabs example"
+                            sx={{ borderRight: 1, borderColor: 'divider' }}
+                        >
+                            <Tab label="Posts" {...a11yProps(0)} />
+                            <Tab label="Favorites" {...a11yProps(1)} />
+                            <Tab label="Followers" {...a11yProps(2)} />
+                            <Tab label="Following" {...a11yProps(3)} />
+                        </Tabs>
+                        <TabPanel value={value} index={0}>
+                            Item One
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            Item Two
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            <UserList type='follower' />
+                        </TabPanel>
+                        <TabPanel value={value} index={3}>
+                            <UserList type='following' />
+                        </TabPanel>
+                    </Box>
+                </CardContent>
                 <Button onClick={CloseUserProfile} variant='outlined'>Back</Button>
             </Card>
         </Container>

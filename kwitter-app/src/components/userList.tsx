@@ -38,14 +38,20 @@ export default function UserList(props:any) {
         );
     }
 
+    if (users.length == 0) {
+        return(
+            <>
+            This user has no {props.type}s
+            </>
+        );
+    }
     return (
                 <TableContainer component={Paper}>
-                    <Table aria-label="simple table">
+                    <Table sx={{width:'250px'}} >
                         <TableBody>
                             {users.map((user, index) => (
-                                <TableRow>
+                                <TableRow key={index}>
                                     <UserCell 
-                                        key={index}
                                         user={user}
                                     />
                                 </TableRow>
