@@ -63,24 +63,23 @@ function Login(props: any) {
     var handlePost = (e: any) => {
         e.preventDefault();
 
-        let data = {
+        let params = {
             username: values.username,
             password: values.password
         };
 
+        console.log(params)
 
-        console.log(data)
-
-    APIclient.login(data).then((res) => {
-        console.log(res.data)
+    APIclient.login(params).then((res) => {
+        console.log(res)
         if (res.data.status === 200) {
-            if (res.data.info.loggedIn === true) {
+            if (res.data.body.loggedIn === true) {
             Object.freeze(APIclient)
             helper.setStorage('loggedIn', true)
-            helper.setStorage('user', data.username)
+            helper.setStorage('user', params.username)
             navigate('/')
             }
-            else updateAlert(res.data.info.message)
+            else updateAlert(res.data.body.message)
         }
         else updateAlert('Network Error')
     })

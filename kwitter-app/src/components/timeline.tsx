@@ -12,12 +12,12 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
 import AddIcon from '@mui/icons-material/Add';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import * as helper from '../helper'
 
 import APIClient from '../APIclient'
+import ProfilePicture from './profilePicture';
 
 
 const StyledFab = styled(Fab)({
@@ -36,8 +36,7 @@ export default function Timeline() {
     let user = helper.getStorage('user')
     APIClient.getTimeline(user!).then(
       (res) => {
-        console.log(res)
-        setTimeline(res.data.data[0])
+        setTimeline(res.data.body[0])
       }
     )
   },[])
@@ -51,10 +50,10 @@ export default function Timeline() {
         </Typography>
         <List sx={{ mb: 2 }}>
           {timeline.map((val:any, index:number) => (
-            <React.Fragment>
+            <React.Fragment key={index}>
               <ListItem button>
                 <ListItemAvatar>
-                  <Avatar alt="Profile Picture" />
+                  <ProfilePicture username={val.username}/>
                 </ListItemAvatar>
                 <ListItemText primary={val.username} secondary={val.message} />
               </ListItem>

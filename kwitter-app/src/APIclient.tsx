@@ -1,9 +1,16 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 
+const HOST = 'localhost'
+const PORT = '10001'
+
+const url = (path : string, param : string) => {
+    return (`http://${HOST}:${PORT}/api/${path}/${param}`)
+}
+
 var APIclient = {
     async getTimeline(username : string){
-        return await axios.get(`http://localhost:10001/api/getTimeline/${username}`) 
+        return await axios.get(url('getTimeline', username)) 
             .then( (res) => {
                 return res
             })
@@ -11,9 +18,18 @@ var APIclient = {
         );
     },
 
-    async login(data : Object){
-        let info = JSON.stringify(data)
-        return await axios.get(`http://localhost:10001/api/login/${info}`) //this is where we send the request 
+    async getProfilePicture(username : string){
+        return await axios.get(url('getProfilePicture', username)) 
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );
+    },
+
+    async login(params : Object){
+        let info = JSON.stringify(params)
+        return await axios.get(url('login', info)) //this is where we send the request 
             .then( (res) => {
                 return res
             })

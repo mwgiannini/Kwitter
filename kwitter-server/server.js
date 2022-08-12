@@ -7,9 +7,9 @@ const PORT = 10001;
 app.use(cors());
 app.use(express.json())
 
-let answer = {
-    status : null,
-    data : null
+let data = {
+    status : Number,
+    body : any=null
 }
 
 // Route to get a users timeline
@@ -19,37 +19,50 @@ app.get("/api/getTimeline/:username", (req,res)=>{
      (err,result)=>{
         if(err) {
         console.log(err)
-        answer.status = 400
+        data.status = 400
         }
-        else { answer.status = 200 }
-        answer.data = result
-        res.send(answer)
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
         });   
 });
 
+// Route to get a users timeline
+app.get("/api/getProfilePicture/:username", (req,res)=>{
+    const username = req.params.username;
+     db.query("SELECT profile_pic FROM user WHERE username=?", username, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
 
 
 // Route to login
 app.get("/api/login/:info", (req,res)=>{
     const data = JSON.parse(req.params.info);
-    let reply = {status: Number, info: any = ''}
      db.query(`SELECT password FROM user WHERE username = '${data.username}';`,
      (err,result)=>{
         if(err) {
         console.log(err)
-        reply.status = 400;
-        reply.info = {loggedIn: false, message:'network error'}
+        data.status = 400;
+        data.body = {loggedIn: false, message:'network error'}
         }
         if (result[0].password === data.password){
-            console.log("correct")
-            reply.status = 200
-            reply.info = {loggedIn: true, message:''}
+            console.log(`${data.username} has logged in`)
+            data.status = 200
+            data.body = {loggedIn: true, message:''}
         }
         else {
-            reply.status = 200;
-            reply.info = {loggedIn: false, message:'wrong password'}
+            data.status = 200;
+            data.body = {loggedIn: false, message:'wrong password'}
         }
-        res.send(JSON.stringify(reply))
+        res.send(JSON.stringify(data))
         });   
 });
 
