@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useImperativeHandle } from "react";
+import React, { useState, useEffect } from "react";
 import APIclient from "../APIclient";
+import { getStorage } from "../helper";
+import UserCard from "./userCard";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import { getStorage } from "../helper";
+
 
 
 export default function UserList(props:any) {
@@ -35,7 +33,7 @@ export default function UserList(props:any) {
     const UserCell = (user: any) => {
         return (
             <TableCell>
-                {user.user[props.type]}
+                <UserCard username={user.user[props.type]} />
             </TableCell>
         );
     }
