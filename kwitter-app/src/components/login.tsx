@@ -63,38 +63,24 @@ function Login(props: any) {
     var handlePost = (e: any) => {
         e.preventDefault();
 
-        let data = {
+        let params = {
             username: values.username,
             password: values.password
         };
 
-    APIclient.login(data).then((res) => {
+    APIclient.login(params).then((res) => {
         if (res.data.status === 200) {
-            if (res.data.info.loggedIn === true) {
+            if (res.data.body.loggedIn === true) {
             Object.freeze(APIclient)
             helper.setStorage('loggedIn', true)
-            helper.setStorage('user', data.username)
+            helper.setStorage('user', params.username)
             navigate('/')
             window.location.reload()
             }
-            else updateAlert(res.data.info.message)
+            else updateAlert(res.data.body.message)
         }
         else updateAlert('Network Error')
-    })
-
-        // APIclient.login(data).then((res) => {
-        //     helper.setStorage("res", res)
-
-        //     if (res.status === 200) {
-        //         Object.freeze(APIclient) // DONT REMOVE - WILL BERAK ALL API REQUEST
-        //         // navigate('/')
-        //     }
-        //     else {
-        //         // updateAlert(res.response.data.message)
-        //     }
-
-        // });
-    }
+    })}
 
     const updateAlert = (err: string) => {
         setAlertMessage(err)
