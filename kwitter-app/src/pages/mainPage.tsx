@@ -12,12 +12,6 @@ import { useNavigate } from "react-router-dom";
 
 function MainPage() {
     const navigate = useNavigate();
-
-    if (JSON.parse(helper.getStorage('loggedIn')!) != true) {
-        navigate('/login')
-    }
-
-
     return (
         <>
             <Timeline/>
