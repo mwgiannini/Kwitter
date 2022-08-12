@@ -27,10 +27,25 @@ app.get("/api/getTimeline/:username", (req,res)=>{
         });   
 });
 
-// Route to get a users timeline
+// Route to get a users profile picture
 app.get("/api/getProfilePicture/:username", (req,res)=>{
     const username = req.params.username;
      db.query("SELECT profile_pic FROM user WHERE username=?", username, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
+
+// Route to favorite/unfavorite a post
+app.get("/api/favorite/:props", (req,res)=>{
+    const props = req.params.props;
+     db.query(`CALL toggle_favorite(${props.username}, ${props.post_time}, ${props.favorite_username})`, 
      (err,result)=>{
         if(err) {
         console.log(err)
@@ -67,7 +82,7 @@ app.get("/api/login/:info", (req,res)=>{
 });
 
 
-// Route to login
+// Route to get users
 app.get("/api/getUsers/:info", (req,res)=>{
     const request = JSON.parse(req.params.info);
     let query;
