@@ -12,9 +12,19 @@ let data = {
     body : any=null
 }
 
-function parseTime(time){
-    let parse = JSON.stringify(time).split('T')
-    return (parse[0] + " " + parse[1].split('.')[0]).substring(1)
+function fixTimesIn(kweetList){
+    let fixTime = (time) => {
+        let parse = JSON.stringify(time).split('T')
+        return (parse[0] + " " + parse[1].split('.')[0]).substring(1)
+    }
+    for(const kweet of kweetList){
+        if ('post_time' in kweet){
+            kweet.post_time = fixTime(kweet.post_time)
+        }
+        if ('rekweet_time' in kweet){
+            kweet.rekweet_time = fixTime(kweet.rekweet_time)
+        }
+    }
 }
 
 // Route to get a users timeline
@@ -22,9 +32,7 @@ app.get("/api/getTimeline/:username", (req,res)=>{
     const username = req.params.username;
      db.query("CALL timeline(?)", username, 
      (err,result)=>{
-        for(const kweet of result[0]){
-            kweet.post_time = parseTime(kweet.post_time)
-        }
+        fixTimesIn(result[0])
         if(err) {
         console.log(err)
         data.status = 400
@@ -89,7 +97,7 @@ app.get("/api/login/:info", (req,res)=>{
         });   
 });
 
-// Route to login
+// Route to sign up
 app.get("/api/signUp/:info", (req,res)=>{
     const request = JSON.parse(req.params.info);
     console.log(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`)
@@ -147,9 +155,7 @@ app.get("/api/getFavorites/:username", (req,res)=>{
     AND favorite_username = '${username}';`
      db.query(query, 
      (err,result)=>{
-        for(const kweet of result){
-            kweet.post_time = parseTime(kweet.post_time)
-        }
+        fixTimesIn(result)
         if(err) {
         console.log(err)
         data.status = 400
@@ -167,6 +173,7 @@ app.get("/api/getUserKweets/:username", (req,res)=>{
     `SELECT * FROM kweet WHERE username = '${username}';`
      db.query(query, 
      (err,result)=>{
+        fixTimesIn(result)
         if(err) {
         console.log(err)
         data.status = 400
@@ -174,24 +181,25 @@ app.get("/api/getUserKweets/:username", (req,res)=>{
         else { data.status = 200 }
         data.body = result
         res.send(data)
-        });   
+    });  
 });
 
 // Route to get a users rekweets
 app.get("/api/getRekweets/:username", (req,res)=>{
     const username = req.params.username;
     let query = 
-    `SELECT rekweet_username as username, username as op, post_time, message, rekweet_time FROM rekweet 
+    `SELECT rekweet_username, kweet.username, kweet.post_time, message, rekweet_time FROM rekweet 
     JOIN
     kweet
     ON
-    kweet_username = username
+    rekweet.username = kweet.username
     AND
-    kweet_post_time = post_time
+    rekweet.post_time = kweet.post_time
     AND
-    rekweet_username = 'f${username}';`  
+    rekweet_username = '${username}';`  
     db.query(query, 
      (err,result)=>{
+        fixTimesIn(result)
         if(err) {
         console.log(err)
         data.status = 400

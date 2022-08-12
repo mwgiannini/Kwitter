@@ -13,7 +13,7 @@ export default function Rekweet(props : any) {
         <Card>
             <CardHeader
                 avatar={
-                    <UserCard username={props.username} sx={{padding:0}}/>
+                    <UserCard username={props.rekweet_username} sx={{padding:0}}/>
                 }
                 action={
                 <IconButton aria-label="settings">
@@ -22,7 +22,7 @@ export default function Rekweet(props : any) {
                 }
             />
             <CardContent sx={{minWidth:1000}}>
-                <Kweet username={props.op} 
+                <Kweet username={props.username} 
                     post_time={props.post_time}
                     message={props.message}/>
             </CardContent>
