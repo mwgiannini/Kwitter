@@ -47,6 +47,32 @@ var APIclient = {
         );  
     },
 
+    async getFavorites(username : string){
+        return await axios.get(url('getFavorites', username)) 
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );
+    },
+
+    async getUserKweets(username : string){
+        return await axios.get(url('getUserKweets', username)) 
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );
+    },
+
+    async getRekweets(username : string){
+        return await axios.get(url('getRekweets', username)) 
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );
+    },
 }
 
 export default APIclient;
