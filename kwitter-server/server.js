@@ -25,8 +25,6 @@ app.get("/api/getTimeline/:username", (req,res)=>{
         for(const kweet of result[0]){
             kweet.post_time = parseTime(kweet.post_time)
         }
-        console.log(result)
-
         if(err) {
         console.log(err)
         data.status = 400
@@ -132,6 +130,9 @@ app.get("/api/getFavorites/:username", (req,res)=>{
     AND favorite_username = '${username}';`
      db.query(query, 
      (err,result)=>{
+        for(const kweet of result){
+            kweet.post_time = parseTime(kweet.post_time)
+        }
         if(err) {
         console.log(err)
         data.status = 400

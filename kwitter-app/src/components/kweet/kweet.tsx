@@ -1,15 +1,13 @@
-import UserCard from './userCard';
+import UserCard from '../userCard';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import APIclient from '../APIclient'
-import { getStorage } from '../helper'
+import FavoriteButton from './favoriteButton';
 
 export default function Kweet(props : any) {
     return (
@@ -30,19 +28,7 @@ export default function Kweet(props : any) {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton onClick={
-                        () => {
-                            let params = {
-                                username : props.username,
-                                post_time : props.post_time,
-                                favorite_username : getStorage("user")
-                            }
-                            
-                            APIclient.toggleFavorite(params)
-                        }
-                    } aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
+                <FavoriteButton username={props.username} post_time={props.post_time}/>
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>

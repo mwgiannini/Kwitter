@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as helper from '../helper'
 
-import APIClient from '../APIclient'
+import APIclient from '../APIclient'
 import KweetList from './kweetList';
 
 export default function Timeline() {
@@ -9,7 +9,7 @@ export default function Timeline() {
 
   React.useEffect(()=>{
     let user = helper.getStorage('user')
-    APIClient.getTimeline(user!).then(
+    APIclient.getTimeline(user!).then(
       (res) => {
         if (res.data != null){
           setTimeline(res.data.body[0])
