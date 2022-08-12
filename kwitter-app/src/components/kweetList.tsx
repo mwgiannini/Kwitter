@@ -1,18 +1,11 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
 import Fab from '@mui/material/Fab';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import AddIcon from '@mui/icons-material/Add';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import Kweet from './kweet/kweet';
+import Rekweet from './kweet/rekweet'
 
 
 const StyledFab = styled(Fab)({
@@ -32,7 +25,14 @@ export default function KweetList(props : any) {
           {props.list.map((val:any, index:number) => (
             <React.Fragment key={index}>
               <ListItem sx={{ justifyContent: 'center'}}>
-                  <Kweet username={val.username} message={val.message} post_time={val.post_time}/>
+                {'op' in val ?
+                  <Rekweet username={val.username} message={val.message} 
+                  post_time={val.post_time} rekweet_time={val.rekweet_time} 
+                  op={val.op}/>
+                  :
+                  <Kweet username={val.username} message={val.message} 
+                  post_time={val.post_time}/>
+                }
               </ListItem>
             </React.Fragment>
           ))}
