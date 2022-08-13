@@ -101,3 +101,17 @@ On other's user pages, you can follow or unfollow the user with the button at th
 
 </pre>
 ![](DemoImages/userpage.png)
+
+## Kweets
+You can favorite/unfavorite other's kweets with the heart icon.
+
+You can repost/unrepost other's kweets with the arrow icon next to the favorite button.
+
+If a kweet is yours, you may delete it with the trash icon.
+
+Tip: *Your favorites and rekweets are public and visible on your user page.*
+
+<pre>
+
+</pre>
+![](DemoImages/kweet.png)
