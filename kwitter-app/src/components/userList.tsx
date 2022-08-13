@@ -16,7 +16,7 @@ export default function UserList(props:any) {
 
     let params = {
         request: props.type,
-        user: getStorage('user'),
+        user: getStorage('display user'),
     }
 
     const getUsers = () => {
