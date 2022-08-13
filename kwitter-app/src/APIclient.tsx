@@ -113,6 +113,16 @@ var APIclient = {
             .catch((err) => {return err}
         );
     },
+
+    async deleteKweet(params : Object){
+        let info = JSON.stringify(params)
+        return await axios.get(url('deleteKweet', info))
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );
+    },
 }
 
 export default APIclient;
