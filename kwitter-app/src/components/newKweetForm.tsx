@@ -86,7 +86,7 @@ export default function NewKweetForm() {
                 multiline
                 fullWidth
                 rows={4}
-                placeholder="Start typing your new post here"
+                placeholder="Please don't SQL inject us >_<"
                 variant="filled"
                 onChange={handleChange} />
             <Button variant="contained" sx={{ margin: '10px' }} onClick={handlePost}>submit</Button>

@@ -232,6 +232,21 @@ app.get("/api/favorite/:info", (req,res)=>{
         });   
 });
 
+// Route to rekweet/unrekweet a kweet
+app.get("/api/rekweet/:info", (req,res)=>{
+    const props = JSON.parse(req.params.info);
+     db.query(`CALL rekweet('${props.username}','${props.rekweet_username}','${props.post_time}')`, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+    });   
+});
+
 // Route to post kweet
 app.get("/api/postKweet/:info", (req,res)=>{
     const request = JSON.parse(req.params.info);
