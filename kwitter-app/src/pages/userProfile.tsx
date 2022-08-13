@@ -51,7 +51,7 @@ export default function UserProfile() {
 
     const FollowButton = () => {
         return (
-            <Button onClick={toggleFollow}>
+            <Button onClick={toggleFollow} variant="contained">
                 {following ? 'Unfollow' : 'Follow'}
             </Button>
         );
