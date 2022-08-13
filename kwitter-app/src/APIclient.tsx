@@ -1,7 +1,6 @@
-import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 
-const HOST = 'localhost'
+const HOST = '67.189.157.94'
 const PORT = '10001'
 
 const url = (path : string, param : string) => {
@@ -117,6 +116,15 @@ var APIclient = {
     async deleteKweet(params : Object){
         let info = JSON.stringify(params)
         return await axios.get(url('deleteKweet', info))
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );
+    },
+
+    async searchUser(username : string){
+        return await axios.get(url('searchUser', username))
             .then( (res) => {
                 return res
             })
