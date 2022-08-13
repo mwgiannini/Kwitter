@@ -12,8 +12,16 @@ import HomeIcon from '@mui/icons-material/Home';
 import Container from '@mui/material/Container'
 import KwitterTitle from "../logo/KwitterTitle.png"
 import { useNavigate } from "react-router-dom";
+import { delStorage } from "../../helper";
 
 export default function MenuAppBar() {
+    const navigate = useNavigate()
+
+    function cleanStorage(){
+        delStorage('display user')
+        navigate('/')
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" color='primary'>
