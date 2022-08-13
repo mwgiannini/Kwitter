@@ -123,6 +123,26 @@ var APIclient = {
             .catch((err) => {return err}
         );
     },
+
+    async checkFollow(params : Object){
+        let info = JSON.stringify(params)
+        return await axios.get(url('checkFollow', info))
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );
+    },
+
+    async toggleFollow(params : Object){
+        let info = JSON.stringify(params)
+        return await axios.get(url('toggleFollow', info))
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );
+    },
 }
 
 export default APIclient;

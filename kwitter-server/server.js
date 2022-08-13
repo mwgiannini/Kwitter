@@ -206,6 +206,29 @@ app.get("/api/login/:info", (req,res)=>{
         });   
 });
 
+// Route to check following status
+app.get("/api/checkFollow/:info", (req,res)=>{
+    let data = {status : Number, body : any=null}
+    const request = JSON.parse(req.params.info);
+     db.query(`SELECT * FROM follow WHERE follower='${request.user}' AND following='${request.target}';`,
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400;
+        data.body = {loggedIn: false, message:'network error'}
+        } 
+        if (result[0]){
+            data.status = 200
+            data.body = {following: true}
+        }
+        else {
+            data.status = 200;
+            data.body = {following: false}
+        }
+        res.send(JSON.stringify(data))
+        });   
+});
+
 
 // --------------------------------------- //
 // ------ ROUTES THAT UPDATE DB ---------- //
@@ -284,6 +307,22 @@ app.get("/api/deleteKweet/:info", (req,res)=>{
     let data = {status : Number, body : any=null}
     const props = JSON.parse(req.params.info);
      db.query(`CALL delete_kweet('${props.username}', '${props.post_time}')`, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
+
+// Route to delete a follow/unfollow
+app.get("/api/toggleFollow/:info", (req,res)=>{
+    let data = {status : Number, body : any=null}
+    const props = JSON.parse(req.params.info);
+     db.query(`CALL toggle_follow('${props.target}', '${props.user}')`, 
      (err,result)=>{
         if(err) {
         console.log(err)
