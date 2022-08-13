@@ -168,7 +168,6 @@ app.get("/api/getFollow/:info", (req,res)=>{
             data.status = 200;
             data.body = {result}
         }
-        console.log(JSON.stringify(data))
         res.send(JSON.stringify(data))
         });   
 });
@@ -236,7 +235,6 @@ app.get("/api/favorite/:info", (req,res)=>{
 // Route to post kweet
 app.get("/api/postKweet/:info", (req,res)=>{
     const request = JSON.parse(req.params.info);
-    console.log(`CALL post_kweet('${request.username}','${request.message}');`)
      db.query(`CALL post_kweet('${request.username}','${request.message}');`,
      (err,result)=>{
         if(err) {
