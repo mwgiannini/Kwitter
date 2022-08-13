@@ -10,7 +10,7 @@ import Kweet from './kweet'
 
 export default function Rekweet(props : any) {
     return (
-        <Card>
+        <Card  elevation={6}>
             <CardHeader
                 avatar={
                     <UserCard username={props.rekweet_username} sx={{padding:0}}/>

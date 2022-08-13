@@ -14,7 +14,7 @@ import DeleteButton from './deleteButton';
 export default function Kweet(props : any) {
     
     return (
-        <Card>
+        <Card elevation={6}>
             <CardHeader
                 avatar={
                     <UserCard username={props.username} sx={{padding:0}}/>
