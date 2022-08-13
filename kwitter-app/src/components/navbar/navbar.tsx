@@ -22,7 +22,7 @@ export default function MenuAppBar() {
                     </IconButton>
                     <Container>
                         <img src={KwitterTitle} alt='kwitter title'
-                            style={{ maxHeight: "50px", margin: 0 }}/>
+                            style={{maxHeight: "50px", margin: 0, borderRadius: '5px'}}/>
                     </Container>
                     <UserButton />
                 </Toolbar>

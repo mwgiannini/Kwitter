@@ -4,10 +4,10 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import RotateRightIcon from '@mui/icons-material/RotateRight';
+import Typography from '@mui/material/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteButton from './favoriteButton';
+import RekweetButton from './rekweetButton'
 
 export default function Kweet(props : any) {
     return (
@@ -29,9 +29,7 @@ export default function Kweet(props : any) {
             </CardContent>
             <CardActions disableSpacing>
                 <FavoriteButton username={props.username} post_time={props.post_time}/>
-                <IconButton aria-label="share">
-                    <RotateRightIcon />
-                </IconButton>
+                <RekweetButton username={props.username} post_time={props.post_time}/>
                 <Typography variant="caption" color="text.secondary" sx={{paddingLeft:'10px'}}>
                     {props.post_time}
                 </Typography>
