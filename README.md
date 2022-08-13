@@ -39,7 +39,7 @@ npm start
 
   
 
-To run the mySQL server, load the latest Dump file from the /kwitter-db/Dumps/ directory into mySQL workbench using the [server-> data] import
+To run the mySQL server, load the latest Dump file from the /kwitter-db/Dumps/ directory into mySQL workbench using the [server-> data import]
 
   
   
