@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import HomeIcon from '@mui/icons-material/Home';
 import Container from '@mui/material/Container'
 import KwitterTitle from "../logo/KwitterTitle.png"
+import { useNavigate } from "react-router-dom";
 
 export default function MenuAppBar() {
     return (
@@ -20,7 +21,7 @@ export default function MenuAppBar() {
                     <IconButton href="/">
                         <HomeIcon fontSize="large"/>
                     </IconButton>
-                    <Container>
+                    <Container >
                         <img src={KwitterTitle} alt='kwitter title'
                             style={{maxHeight: "50px", margin: 0, borderRadius: '5px'}}/>
                     </Container>

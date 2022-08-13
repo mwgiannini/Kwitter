@@ -93,6 +93,16 @@ var APIclient = {
             .catch((err) => {return err}
         );
     },
+
+    async postKweet(params : Object){
+        let info = JSON.stringify(params)
+        return await axios.get(url('postKweet', info)) 
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );
+    },
 }
 
 export default APIclient;
