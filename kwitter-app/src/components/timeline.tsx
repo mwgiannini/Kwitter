@@ -18,7 +18,11 @@ export default function Timeline() {
     )
   },[])
   
-  return (
-    <KweetList list={timeline}/>
-  );
+  if(timeline){
+    return (
+      <KweetList list={timeline}/>
+    );
+  }
+  
+  return(<></>)
 }

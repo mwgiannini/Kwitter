@@ -15,7 +15,7 @@ export default function RekweetButton(props : any) {
         if (res.data != null){
             if (res.data.body.some((e : any) => e.username === props.username &&
                                              e.post_time === props.post_time &&
-                                    e.favorite_username === user))    
+                                    e.rekweet_username === user))    
             setRekweeted(true)
         }
       }
@@ -29,13 +29,13 @@ export default function RekweetButton(props : any) {
                   let params = {
                       username : props.username,
                       post_time : props.post_time,
-                      favorite_username : getStorage("user")
+                      rekweet_username : getStorage("user")
                   }
                   
-                  //APIclient.toggleRekweet(params)
+                  APIclient.toggleRekweet(params)
                   setRekweeted(!rekweeted);
               }
-          } aria-label="add to favorites">
+          } aria-label="rekweet">
           {rekweeted ? 
               <RepeatOne /> :
               <RepeatOne color='disabled'/>

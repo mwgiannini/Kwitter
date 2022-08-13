@@ -168,7 +168,6 @@ app.get("/api/getFollow/:info", (req,res)=>{
             data.status = 200;
             data.body = {result}
         }
-        console.log(JSON.stringify(data))
         res.send(JSON.stringify(data))
         });   
 });
@@ -222,6 +221,21 @@ app.get("/api/signUp/:info", (req,res)=>{
 app.get("/api/favorite/:info", (req,res)=>{
     const props = JSON.parse(req.params.info);
      db.query(`CALL toggle_favorite('${props.username}', '${props.post_time}', '${props.favorite_username}')`, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
+
+// Route to rekweet/unrekweet a kweet
+app.get("/api/rekweet/:info", (req,res)=>{
+    const props = JSON.parse(req.params.info);
+     db.query(`CALL rekweet('${props.username}','${props.rekweet_username}','${props.post_time}')`, 
      (err,result)=>{
         if(err) {
         console.log(err)

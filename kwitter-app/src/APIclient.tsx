@@ -28,6 +28,16 @@ var APIclient = {
         );
     },
 
+    async toggleRekweet(params : Object){
+        let info = JSON.stringify(params)
+        return await axios.get(url('rekweet', info))
+            .then( (res) => {
+                return res
+            })
+            .catch((err) => {return err}
+        );
+    },
+
     async getProfilePicture(username : string){
         return await axios.get(url('getProfilePicture', username)) 
             .then( (res) => {
