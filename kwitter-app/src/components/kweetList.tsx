@@ -59,7 +59,7 @@ export default function KweetList(props: any) {
       <List sx={{ mb: 2 }}>
         {props.list.map((val: any, index: number) => (
           <React.Fragment key={index}>
-            <ListItem sx={{ justifyContent: 'center' }}>
+            <ListItem sx={{ justifyContent: 'center'}}>
               {'rekweet_time' in val ?
                 <Rekweet username={val.username} message={val.message}
                   post_time={val.post_time} rekweet_time={val.rekweet_time}

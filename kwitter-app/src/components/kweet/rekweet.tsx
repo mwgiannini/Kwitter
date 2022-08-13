@@ -21,7 +21,7 @@ export default function Rekweet(props : any) {
                 </IconButton>
                 }
             />
-            <CardContent sx={{minWidth:1000}}>
+            <CardContent sx={{minWidth:'100%'}}>
                 <Kweet username={props.username} 
                     post_time={props.post_time}
                     message={props.message}/>

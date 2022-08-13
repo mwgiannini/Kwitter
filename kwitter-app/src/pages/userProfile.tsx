@@ -15,13 +15,48 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 
-
 export default function UserProfile() {
     const [value, setValue] = React.useState(0);
     const [favorites, setFavorites] = React.useState<object[]>([])
     const [kweets, setKweets] = React.useState<object[]>([])
     const [rekweets, setRekweets] = React.useState<object[]>([])
+    const [following, setFollowing] = React.useState(false)
 
+    let params = {
+        user: getStorage('user'),
+        target: getStorage('display user')
+    }
+
+    useEffect(() => {
+        checkFollow()
+        })
+
+
+    function checkFollow() {
+        APIclient.checkFollow(params).then((res) => {
+            console.log(res.data.body.following)
+            Object.freeze(APIclient)
+            if (res.data.status === 200) {
+                setFollowing(res.data.body.following)
+            }
+            else {
+            }
+        })
+    }
+
+    function toggleFollow() {
+        APIclient.toggleFollow(params);
+        setFollowing(!following)
+        window.location.reload();
+    }
+
+    const FollowButton = () => {
+        return (
+            <Button onClick={toggleFollow} variant="contained">
+                {following ? 'Unfollow' : 'Follow'}
+            </Button>
+        );
+    }
 
     const GetList = () => {
         APIclient.getFavorites(getStorage('display user')!).then((res) => {
@@ -109,6 +144,9 @@ export default function UserProfile() {
     return (
         <>
             <UserCard username={getStorage('display user')} />
+            {getStorage('user') === getStorage('display user') ?
+            <></>:<FollowButton/>
+            }
             <Box
                 sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
             >
