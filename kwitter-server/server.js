@@ -7,11 +7,6 @@ const PORT = 10001;
 app.use(cors());
 app.use(express.json())
 
-let data = {
-    status : Number,
-    body : any=null
-}
-
 function fixTimesIn(kweetList){
     let fixTime = (time) => {
         let parse = JSON.stringify(time).split('T')
@@ -33,6 +28,7 @@ function fixTimesIn(kweetList){
 
 // Route to get a users timeline
 app.get("/api/getTimeline/:username", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const username = req.params.username;
      db.query(`CALL get_following_posts('${username}')`, 
      (err1,result1)=>{
@@ -48,19 +44,29 @@ app.get("/api/getTimeline/:username", (req,res)=>{
                     data.status = 400
                 }
                 else{
-                    data.status = 200
-                    fixTimesIn(result1[0])
-                    fixTimesIn(result2[0])
-                    data.body = result1[0].concat(result2[0])
+                    db.query(`SELECT * FROM kweet WHERE username = '${username}';`, 
+                    (err3,result3)=>{
+                        if(err3) {
+                        console.log(err3)
+                        data.status = 400
+                        }
+                        else { data.status = 200 }
+                        
+                        fixTimesIn(result1[0])
+                        fixTimesIn(result2[0])
+                        fixTimesIn(result3)
+                        data.body = result1[0].concat(result2[0]).concat(result3)
+                        res.send(data)
+                    }) 
                 }
             })
         }
-        res.send(data)
-        });   
+    });   
 });
 
 // Route to get a users favorites
 app.get("/api/getFavorites/:username", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const username = req.params.username;
     let query = 
     `SELECT username, post_time, message, favorite_username FROM favorite
@@ -85,6 +91,7 @@ app.get("/api/getFavorites/:username", (req,res)=>{
 
 // Route to get a users kweets
 app.get("/api/getUserKweets/:username", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const username = req.params.username;
     let query = 
     `SELECT * FROM kweet WHERE username = '${username}';`
@@ -103,6 +110,7 @@ app.get("/api/getUserKweets/:username", (req,res)=>{
 
 // Route to get a users rekweets
 app.get("/api/getRekweets/:username", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const username = req.params.username;
     let query = 
     `SELECT rekweet_username, kweet.username, kweet.post_time, message, rekweet_time FROM rekweet 
@@ -134,6 +142,7 @@ app.get("/api/getRekweets/:username", (req,res)=>{
 
 // Route to get a users profile picture
 app.get("/api/getProfilePicture/:username", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const username = req.params.username;
      db.query("SELECT profile_pic FROM user WHERE username=?", username, 
      (err,result)=>{
@@ -149,6 +158,7 @@ app.get("/api/getProfilePicture/:username", (req,res)=>{
 
 // Route to get following/followers
 app.get("/api/getFollow/:info", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const request = JSON.parse(req.params.info);
     let query;
     if (request.request == 'follower'){
@@ -174,6 +184,7 @@ app.get("/api/getFollow/:info", (req,res)=>{
 
 // Route to login
 app.get("/api/login/:info", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const request = JSON.parse(req.params.info);
      db.query(`SELECT password FROM user WHERE username = '${request.username}';`,
      (err,result)=>{
@@ -202,6 +213,7 @@ app.get("/api/login/:info", (req,res)=>{
 
 // Route to sign up
 app.get("/api/signUp/:info", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const request = JSON.parse(req.params.info);
     db.query(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`,
      (err,result)=>{
@@ -219,6 +231,7 @@ app.get("/api/signUp/:info", (req,res)=>{
 
 // Route to favorite/unfavorite a post
 app.get("/api/favorite/:info", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const props = JSON.parse(req.params.info);
      db.query(`CALL toggle_favorite('${props.username}', '${props.post_time}', '${props.favorite_username}')`, 
      (err,result)=>{
@@ -234,6 +247,7 @@ app.get("/api/favorite/:info", (req,res)=>{
 
 // Route to rekweet/unrekweet a kweet
 app.get("/api/rekweet/:info", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const props = JSON.parse(req.params.info);
      db.query(`CALL rekweet('${props.username}','${props.rekweet_username}','${props.post_time}')`, 
      (err,result)=>{
@@ -249,6 +263,7 @@ app.get("/api/rekweet/:info", (req,res)=>{
 
 // Route to post kweet
 app.get("/api/postKweet/:info", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const request = JSON.parse(req.params.info);
      db.query(`CALL post_kweet('${request.username}','${request.message}');`,
      (err,result)=>{
