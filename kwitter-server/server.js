@@ -52,7 +52,6 @@ app.get("/api/getTimeline/:username", (req,res)=>{
                     fixTimesIn(result1[0])
                     fixTimesIn(result2[0])
                     data.body = result1[0].concat(result2[0])
-                    console.log(data.body)
                 }
             })
         }
@@ -158,7 +157,6 @@ app.get("/api/getFollow/:info", (req,res)=>{
     else {
         query = `SELECT following FROM follow WHERE follower = '${request.user}';`
     }
-    console.log(query)
      db.query(query,
      (err,result)=>{
         if(err) {
@@ -206,8 +204,7 @@ app.get("/api/login/:info", (req,res)=>{
 // Route to sign up
 app.get("/api/signUp/:info", (req,res)=>{
     const request = JSON.parse(req.params.info);
-    console.log(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`)
-     db.query(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`,
+    db.query(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`,
      (err,result)=>{
         if(err) {
         console.log(err)
