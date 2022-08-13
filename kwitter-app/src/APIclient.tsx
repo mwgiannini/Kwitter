@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const HOST = '67.189.157.94'
+const HOST = 'localhost'
 const PORT = '10001'
 
 const url = (path : string, param : string) => {
