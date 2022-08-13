@@ -25,7 +25,7 @@ export default function Kweet(props : any) {
                 </IconButton>
                 }
             />
-            <CardContent sx={{minWidth:1000}}>
+            <CardContent sx={{width:1000}}>
                 <Typography variant="body2" color="text.secondary">
                     {props.message}
                 </Typography>

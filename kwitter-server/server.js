@@ -140,6 +140,22 @@ app.get("/api/getRekweets/:username", (req,res)=>{
 // ------ ROUTES THAT GET OTHER ---------- //
 // --------------------------------------- //
 
+// Route to search for a user
+app.get("/api/searchUser/:username", (req,res)=>{
+    let data = {status : Number, body : any=null}
+    const username = req.params.username;
+     db.query("SELECT username FROM user WHERE username=?", username, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
+
 // Route to get a users profile picture
 app.get("/api/getProfilePicture/:username", (req,res)=>{
     let data = {status : Number, body : any=null}
