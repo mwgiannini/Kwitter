@@ -46,18 +46,18 @@ export default function UserList(props:any) {
         );
     }
     return (
-                <TableContainer component={Paper}>
-                    <Table sx={{width:'250px'}} >
-                        <TableBody>
-                            {users.map((user, index) => (
-                                <TableRow key={index}>
-                                    <UserCell 
-                                        user={user}
-                                    />
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+            <TableContainer component={Paper}>
+                <Table sx={{width:'250px'}} >
+                    <TableBody>
+                        {users.map((user, index) => (
+                            <TableRow key={index}>
+                                <UserCell 
+                                    user={user}
+                                />
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
     );
 }

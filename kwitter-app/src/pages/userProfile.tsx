@@ -29,7 +29,7 @@ export default function UserProfile() {
 
     useEffect(() => {
         checkFollow()
-        },[])
+        })
 
 
     function checkFollow() {
@@ -46,6 +46,7 @@ export default function UserProfile() {
 
     function toggleFollow() {
         APIclient.toggleFollow(params);
+        setFollowing(!following)
         window.location.reload();
     }
 
