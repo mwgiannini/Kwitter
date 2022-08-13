@@ -17,31 +17,38 @@ const StyledFab = styled(Fab)({
   margin: '0 auto',
 });
 
-export default function KweetList(props : any) {
+export default function KweetList(props: any) {
 
-  let compare = ( a : any, b : any) =>
-  {
+  let compare = (a: any, b: any) => {
     let a_time, b_time
-    if ('rekweet_time' in a){
+    if ('rekweet_time' in a) {
       a_time = a.rekweet_time
     }
-    else{
+    else {
       a_time = a.post_time
     }
-    if ('rekweet_time' in b){
+    if ('rekweet_time' in b) {
       b_time = b.rekweet_time
     }
-    else{
+    else {
       b_time = b.post_time
     }
 
-    if ( a_time > b_time ){
+    if (a_time > b_time) {
       return -1;
     }
-    if ( a_time < b_time ){
+    if (a_time < b_time) {
       return 1;
     }
     return 0;
+  }
+
+  if (props.list.length === 0) {
+    return (
+      <>
+        No Kweets!
+      </>
+    );
   }
 
   props.list.sort(compare)
@@ -49,33 +56,22 @@ export default function KweetList(props : any) {
   return (
     <React.Fragment>
       <CssBaseline />
-        <List sx={{ mb: 2 }}>
-          {props.list.map((val:any, index:number) => (
-            <React.Fragment key={index}>
-              <ListItem sx={{ justifyContent: 'center'}}>
-                {'rekweet_time' in val ?
-                  <Rekweet username={val.username} message={val.message} 
-                  post_time={val.post_time} rekweet_time={val.rekweet_time} 
-                  rekweet_username={val.rekweet_username}/>
-                  :
-                  <Kweet username={val.username} message={val.message} 
-                  post_time={val.post_time}/>
-                }
-              </ListItem>
-            </React.Fragment>
-          ))}
-        </List>
-      {/* <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
-        <Toolbar>
-          <StyledFab color="secondary" aria-label="add">
-            <AddIcon />
-          </StyledFab>
-          <Box sx={{ flexGrow: 1 }} />
-          <IconButton color="inherit">
-            <MoreIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar> */}
+      <List sx={{ mb: 2 }}>
+        {props.list.map((val: any, index: number) => (
+          <React.Fragment key={index}>
+            <ListItem sx={{ justifyContent: 'center' }}>
+              {'rekweet_time' in val ?
+                <Rekweet username={val.username} message={val.message}
+                  post_time={val.post_time} rekweet_time={val.rekweet_time}
+                  rekweet_username={val.rekweet_username} />
+                :
+                <Kweet username={val.username} message={val.message}
+                  post_time={val.post_time} />
+              }
+            </ListItem>
+          </React.Fragment>
+        ))}
+      </List>
     </React.Fragment>
   );
 }
