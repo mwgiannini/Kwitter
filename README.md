@@ -56,7 +56,7 @@ To run the mySQL server, load the latest Dump file from the /kwitter-db/Dumps/ d
 |username|  password|
 |--|--|
 | mw | murphy |
-|amor|vesper|
+|me_wang|vesper|
 |frank|123456|
 |tut_the_gut|password|
 |humphrey_dumpty|drowssap|
@@ -66,7 +66,54 @@ To run the mySQL server, load the latest Dump file from the /kwitter-db/Dumps/ d
 
   
 
-Upon the page load, if you have not logged in, then the page will direct you to the log in page. To create an account, click the signup button. Alternatively, log in the accounts above have posts, follows, 'rekweets', and likes already made.
+Upon the page load, if you have not logged in, then the page will direct you to the log in page. To create an account, click the signup button. Alternatively, the accounts above have posts, follows, 'rekweets', and likes already made.
 
-  
-![](https://lh4.googleusercontent.com/tyCLM5pbGCJyYggl_FeRHQjyoFe6VO5D3aX-LpmCRzeYdC32t5Cawasx7SzQqBoxM-SQTG5HFyxVEJeCa-iqLwJk7EiB9jXwCt0K1LE0RzX28v_qUVTZX4_EuazH6jaUqY_Wum2g3QSj3k3DGnUFeuY)
+Tip *the user mw has the best data for demo purposes*
+
+<pre>
+
+</pre>
+![](DemoImages/login.png)
+
+## Navbar
+The home icon on the navbar will bring you back to your timeline from any page.  
+
+The search bar can be used to find users to interact with. Try searching for the users in the table above!
+
+The user button will display the current user and a logout button when clicked.
+
+Tip: *click any user's name or profile picture to view that user's page.*
+
+<pre>
+
+</pre>
+![](DemoImages/homepage.png)
+
+## Timeline
+After logging in, you will be directed to your timeline. The timeline is a collection of all the posts and reposts of the users you are following in chronological order. Your posts will also appear on this screen.
+
+From this page, you can also write your first Kweet! Click the plus icon on the bottom of the page to begin writing.
+
+## User page
+The user page displays a user's posts, reposts, favorites, followers,  and followings. 
+
+On other's user pages, you can follow or unfollow the user with the button at the top of the screen
+
+<pre>
+
+</pre>
+![](DemoImages/userpage.png)
+
+## Kweets
+You can favorite/unfavorite other's kweets with the heart icon.
+
+You can repost/unrepost other's kweets with the arrow icon next to the favorite button.
+
+If a kweet is yours, you may delete it with the trash icon.
+
+Tip: *Your favorites and rekweets are public and visible on your user page.*
+
+<pre>
+
+</pre>
+![](DemoImages/kweet.png)
