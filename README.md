@@ -68,5 +68,7 @@ To run the mySQL server, load the latest Dump file from the /kwitter-db/Dumps/ d
 
 Upon the page load, if you have not logged in, then the page will direct you to the log in page. To create an account, click the signup button. Alternatively, log in the accounts above have posts, follows, 'rekweets', and likes already made.
 
-  
-![](https://lh4.googleusercontent.com/tyCLM5pbGCJyYggl_FeRHQjyoFe6VO5D3aX-LpmCRzeYdC32t5Cawasx7SzQqBoxM-SQTG5HFyxVEJeCa-iqLwJk7EiB9jXwCt0K1LE0RzX28v_qUVTZX4_EuazH6jaUqY_Wum2g3QSj3k3DGnUFeuY)
+<pre>
+
+</pre>
+![](DemoImages/login.png)
