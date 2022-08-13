@@ -12,7 +12,7 @@ export default function Timeline() {
     APIclient.getTimeline(user!).then(
       (res) => {
         if (res.data != null){
-          setTimeline(res.data.body[0])
+          setTimeline(res.data.body)
         }
       }
     )

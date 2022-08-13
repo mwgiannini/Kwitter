@@ -57,9 +57,9 @@ var APIclient = {
         );  
     },
 
-    async getUsers(params : Object){
+    async getFollow(params : Object){
         let info = JSON.stringify(params)
-        return await axios.get(url('getUsers', info)) //this is where we send the request 
+        return await axios.get(url('getFollow', info)) //this is where we send the request 
             .then( (res) => {
                 return res
             })

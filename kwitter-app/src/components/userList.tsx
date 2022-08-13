@@ -20,7 +20,7 @@ export default function UserList(props:any) {
     }
 
     const getUsers = () => {
-        APIclient.getUsers(params).then((res) => {
+        APIclient.getFollow(params).then((res) => {
             if (res.status === 200) {
                 Object.freeze(APIclient)
                 setUsers(res.data.body.result)

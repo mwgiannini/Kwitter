@@ -12,19 +12,68 @@ let data = {
     body : any=null
 }
 
-function parseTime(time){
-    let parse = JSON.stringify(time).split('T')
-    return (parse[0] + " " + parse[1].split('.')[0]).substring(1)
+function fixTimesIn(kweetList){
+    let fixTime = (time) => {
+        let parse = JSON.stringify(time).split('T')
+        return (parse[0] + " " + parse[1].split('.')[0]).substring(1)
+    }
+    for(const kweet of kweetList){
+        if ('post_time' in kweet){
+            kweet.post_time = fixTime(kweet.post_time)
+        }
+        if ('rekweet_time' in kweet){
+            kweet.rekweet_time = fixTime(kweet.rekweet_time)
+        }
+    }
 }
+
+// --------------------------------------- //
+// ------ ROUTES THAT RETURN KWEETS ------ //
+// --------------------------------------- //
 
 // Route to get a users timeline
 app.get("/api/getTimeline/:username", (req,res)=>{
     const username = req.params.username;
-     db.query("CALL timeline(?)", username, 
-     (err,result)=>{
-        for(const kweet of result[0]){
-            kweet.post_time = parseTime(kweet.post_time)
+     db.query(`CALL get_following_posts('${username}')`, 
+     (err1,result1)=>{
+        if(err1) {
+        console.log(err1)
+        data.status = 400
         }
+        else {
+            db.query(`CALL get_following_rekweets('${username}')`, 
+            (err2,result2)=>{
+                if(err2) {
+                    console.log(err2)
+                    data.status = 400
+                }
+                else{
+                    data.status = 200
+                    fixTimesIn(result1[0])
+                    fixTimesIn(result2[0])
+                    data.body = result1[0].concat(result2[0])
+                    console.log(data.body)
+                }
+            })
+        }
+        res.send(data)
+        });   
+});
+
+// Route to get a users favorites
+app.get("/api/getFavorites/:username", (req,res)=>{
+    const username = req.params.username;
+    let query = 
+    `SELECT username, post_time, message, favorite_username FROM favorite
+    JOIN kweet
+    ON
+    kweet_username = username
+    AND
+    kweet_post_time = post_time
+    AND favorite_username = '${username}';`
+     db.query(query, 
+     (err,result)=>{
+        fixTimesIn(result)
         if(err) {
         console.log(err)
         data.status = 400
@@ -34,6 +83,55 @@ app.get("/api/getTimeline/:username", (req,res)=>{
         res.send(data)
         });   
 });
+
+// Route to get a users kweets
+app.get("/api/getUserKweets/:username", (req,res)=>{
+    const username = req.params.username;
+    let query = 
+    `SELECT * FROM kweet WHERE username = '${username}';`
+     db.query(query, 
+     (err,result)=>{
+        fixTimesIn(result)
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+    });  
+});
+
+// Route to get a users rekweets
+app.get("/api/getRekweets/:username", (req,res)=>{
+    const username = req.params.username;
+    let query = 
+    `SELECT rekweet_username, kweet.username, kweet.post_time, message, rekweet_time FROM rekweet 
+    JOIN
+    kweet
+    ON
+    rekweet.username = kweet.username
+    AND
+    rekweet.post_time = kweet.post_time
+    AND
+    rekweet_username = '${username}';`  
+    db.query(query, 
+     (err,result)=>{
+        fixTimesIn(result)
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
+
+
+// --------------------------------------- //
+// ------ ROUTES THAT GET OTHER ---------- //
+// --------------------------------------- //
 
 // Route to get a users profile picture
 app.get("/api/getProfilePicture/:username", (req,res)=>{
@@ -50,65 +148,8 @@ app.get("/api/getProfilePicture/:username", (req,res)=>{
         });   
 });
 
-// Route to favorite/unfavorite a post
-app.get("/api/favorite/:info", (req,res)=>{
-    const props = JSON.parse(req.params.info);
-     db.query(`CALL toggle_favorite('${props.username}', '${props.post_time}', '${props.favorite_username}')`, 
-     (err,result)=>{
-        if(err) {
-        console.log(err)
-        data.status = 400
-        }
-        else { data.status = 200 }
-        data.body = result
-        res.send(data)
-        });   
-});
-
-
-// Route to login
-app.get("/api/login/:info", (req,res)=>{
-    const request = JSON.parse(req.params.info);
-     db.query(`SELECT password FROM user WHERE username = '${request.username}';`,
-     (err,result)=>{
-        if(err) {
-        console.log(err)
-        data.status = 400;
-        data.body = {loggedIn: false, message:'network error'}
-        }
-        if (result[0].password === request.password){
-            console.log(`${request.username} has logged in`)
-            data.status = 200
-            data.body = {loggedIn: true, message:''}
-        }
-        else {
-            data.status = 200;
-            data.body = {loggedIn: false, message:'wrong password'}
-        }
-        res.send(JSON.stringify(data))
-        });   
-});
-
-// Route to login
-app.get("/api/signUp/:info", (req,res)=>{
-    const request = JSON.parse(req.params.info);
-    console.log(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`)
-     db.query(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`,
-     (err,result)=>{
-        if(err) {
-        console.log(err)
-        data.status = 400;
-        data.body = {message:err.sqlMessage}
-        }
-        else {
-            data.status = 200;
-        }
-        res.send(JSON.stringify(data))
-        });   
-});
-
-// Route to get users
-app.get("/api/getUsers/:info", (req,res)=>{
+// Route to get following/followers
+app.get("/api/getFollow/:info", (req,res)=>{
     const request = JSON.parse(req.params.info);
     let query;
     if (request.request == 'follower'){
@@ -134,63 +175,56 @@ app.get("/api/getUsers/:info", (req,res)=>{
         });   
 });
 
-// Route to get a users favorites
-app.get("/api/getFavorites/:username", (req,res)=>{
-    const username = req.params.username;
-    let query = 
-    `SELECT username, post_time, message, favorite_username FROM favorite
-    JOIN kweet
-    ON
-    kweet_username = username
-    AND
-    kweet_post_time = post_time
-    AND favorite_username = '${username}';`
-     db.query(query, 
-     (err,result)=>{
-        for(const kweet of result){
-            kweet.post_time = parseTime(kweet.post_time)
-        }
-        if(err) {
-        console.log(err)
-        data.status = 400
-        }
-        else { data.status = 200 }
-        data.body = result
-        res.send(data)
-        });   
-});
-
-// Route to get a users kweets
-app.get("/api/getUserKweets/:username", (req,res)=>{
-    const username = req.params.username;
-    let query = 
-    `SELECT * FROM kweet WHERE username = '${username}';`
-     db.query(query, 
+// Route to login
+app.get("/api/login/:info", (req,res)=>{
+    const request = JSON.parse(req.params.info);
+     db.query(`SELECT password FROM user WHERE username = '${request.username}';`,
      (err,result)=>{
         if(err) {
         console.log(err)
-        data.status = 400
+        data.status = 400;
+        data.body = {loggedIn: false, message:'network error'}
         }
-        else { data.status = 200 }
-        data.body = result
-        res.send(data)
+        if (result[0].password === request.password){
+            console.log(`${request.username} has logged in`)
+            data.status = 200
+            data.body = {loggedIn: true, message:''}
+        }
+        else {
+            data.status = 200;
+            data.body = {loggedIn: false, message:'wrong password'}
+        }
+        res.send(JSON.stringify(data))
         });   
 });
 
-// Route to get a users rekweets
-app.get("/api/getRekweets/:username", (req,res)=>{
-    const username = req.params.username;
-    let query = 
-    `SELECT rekweet_username as username, username as op, post_time, message, rekweet_time FROM rekweet 
-    JOIN
-    kweet
-    ON
-    kweet_username = username
-    AND
-    kweet_post_time = post_time
-    AND
-    rekweet_username = 'f${username}';`  
-    db.query(query, 
+
+// --------------------------------------- //
+// ------ ROUTES THAT UPDATE DB ---------- //
+// --------------------------------------- //
+
+// Route to sign up
+app.get("/api/signUp/:info", (req,res)=>{
+    const request = JSON.parse(req.params.info);
+    console.log(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`)
+     db.query(`INSERT INTO user (username, password) VALUES('${request.username}','${request.password}');`,
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400;
+        data.body = {message:err.sqlMessage}
+        }
+        else {
+            data.status = 200;
+        }
+        res.send(JSON.stringify(data))
+        });   
+});
+
+// Route to favorite/unfavorite a post
+app.get("/api/favorite/:info", (req,res)=>{
+    const props = JSON.parse(req.params.info);
+     db.query(`CALL toggle_favorite('${props.username}', '${props.post_time}', '${props.favorite_username}')`, 
      (err,result)=>{
         if(err) {
         console.log(err)

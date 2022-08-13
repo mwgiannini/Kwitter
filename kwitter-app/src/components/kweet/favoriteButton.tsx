@@ -14,7 +14,6 @@ export default function FavoriteButton(props : any) {
     APIclient.getFavorites(user!).then(
       (res) => {
         if (res.data != null){
-            console.log(res.data.body)
             if (res.data.body.some((e : any) => e.username === props.username &&
                                              e.post_time === props.post_time &&
                                     e.favorite_username === user))    

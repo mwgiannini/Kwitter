@@ -1,18 +1,11 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
 import Fab from '@mui/material/Fab';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import AddIcon from '@mui/icons-material/Add';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import Kweet from './kweet/kweet';
+import Rekweet from './kweet/rekweet'
 
 
 const StyledFab = styled(Fab)({
@@ -25,6 +18,33 @@ const StyledFab = styled(Fab)({
 });
 
 export default function KweetList(props : any) {
+  let compare = ( a : any, b : any) =>
+  {
+    let a_time, b_time
+    if ('rekweet_time' in a){
+      a_time = a.rekweet_time
+    }
+    else{
+      a_time = a.post_time
+    }
+    if ('rekweet_time' in b){
+      b_time = b.rekweet_time
+    }
+    else{
+      b_time = b.post_time
+    }
+
+    if ( a_time > b_time ){
+      return -1;
+    }
+    if ( a_time < b_time ){
+      return 1;
+    }
+    return 0;
+  }
+
+  props.list.sort(compare)
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -32,7 +52,14 @@ export default function KweetList(props : any) {
           {props.list.map((val:any, index:number) => (
             <React.Fragment key={index}>
               <ListItem sx={{ justifyContent: 'center'}}>
-                  <Kweet username={val.username} message={val.message} post_time={val.post_time}/>
+                {'rekweet_time' in val ?
+                  <Rekweet username={val.username} message={val.message} 
+                  post_time={val.post_time} rekweet_time={val.rekweet_time} 
+                  rekweet_username={val.rekweet_username}/>
+                  :
+                  <Kweet username={val.username} message={val.message} 
+                  post_time={val.post_time}/>
+                }
               </ListItem>
             </React.Fragment>
           ))}

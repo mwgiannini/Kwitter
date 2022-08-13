@@ -5,7 +5,7 @@ USE kwitterdb;
 -- ---------------------------------------------------------------
 
 -- See a user's favorited kweets
-SELECT * FROM favorite WHERE favorite_username = 'mw';
+SELECT * FROM favorite WHERE favorite_username = 'tut_the_gut';
 
 -- See a list of who a user is following
 SELECT following FROM follow WHERE follower = 'mw';
@@ -36,7 +36,7 @@ CALL post_kweet("tut_the_gut", "I miss freedom.");
 CALL toggle_follow("mw", "me_wang");
 
 -- Timeline
-CALL timeline('mw');
+CALL timeline('me_wang');
 
 -- Rekweet a user's kweet
 CALL rekweet('tut_the_gut', 'me_wang', '2022-07-29 15:42:00');
@@ -91,39 +91,10 @@ CREATE PROCEDURE timeline(
 	IN this_username VARCHAR(20)
 )
 BEGIN
-SELECT DISTINCT kweet.username, kweet.post_time, message FROM kweet
-	LEFT JOIN follow ON follower = this_username
-		LEFT JOIN rekweet ON rekweet_username = following
-	WHERE following = kweet.username OR rekweet.username = kweet.username
-	ORDER BY post_time DESC;
-END//
-delimiter ;
-
--- Get kweets from users one is following --
-delimiter //
-DROP PROCEDURE IF EXISTS get_following_posts;
-CREATE PROCEDURE get_following_posts(
-	IN this_username VARCHAR(20)
-)
-BEGIN
-SELECT username, post_time, message FROM kweet
-	LEFT JOIN follow ON follower = this_username
-	WHERE username = following
-	ORDER BY post_time DESC;
-END//
-delimiter ;
-
--- Get rekweets from users one is following --
-delimiter //
-DROP PROCEDURE IF EXISTS get_following_rekweets;
-CREATE PROCEDURE get_following_rekweets(
-	IN this_username VARCHAR(20)
-)
-BEGIN
-SELECT rekweet_username, username, post_time, rekweet_time, message FROM rekweet
-	LEFT JOIN follow ON follower = 'mw'
-		LEFT JOIN kweet USING(username, post_time)
-	WHERE rekweet_username = following
+SELECT DISTINCT username, post_time, message FROM kweet
+	JOIN follow ON follower = this_username
+		JOIN rekweet ON rekweet_username = following
+	WHERE following = username OR kweet_username = username
 	ORDER BY post_time DESC;
 END//
 delimiter ;
@@ -140,10 +111,10 @@ BEGIN
 IF NOT EXISTS( 
 	SELECT * FROM rekweet 
     WHERE rekweet_username = rekweeter 
-    AND username = kweeter 
-    AND post_time = kweet_time
+    AND kweet_username = kweeter 
+    AND kweet_post_time = kweet_time
 ) THEN
-INSERT INTO rekweet(rekweet_username, username, post_time)
+INSERT INTO rekweet(rekweet_username, kweet_username, kweet_post_time)
 	VALUES(rekweeter, kweeter, kweet_time);
 END IF;
 END//
@@ -158,9 +129,9 @@ CREATE PROCEDURE delete_kweet(
 )
 BEGIN
 DELETE FROM favorite 
-WHERE kweet_username = this_username AND kweet_post_time = this_time;
+WHERE kweet_username = this_username AND kweet_post_time;
 DELETE FROM rekweet
-WHERE username = this_username AND post_time = this_time;
+WHERE kweet_username = this_username AND kweet_post_time;
 DELETE FROM kweet
 WHERE username = this_username AND post_time = this_time;
 END//

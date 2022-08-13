@@ -5,16 +5,15 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import RotateRightIcon from '@mui/icons-material/RotateRight';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import FavoriteButton from './favoriteButton';
+import Kweet from './kweet'
 
-export default function Kweet(props : any) {
+export default function Rekweet(props : any) {
     return (
         <Card>
             <CardHeader
                 avatar={
-                    <UserCard username={props.username} sx={{padding:0}}/>
+                    <UserCard username={props.rekweet_username} sx={{padding:0}}/>
                 }
                 action={
                 <IconButton aria-label="settings">
@@ -23,17 +22,13 @@ export default function Kweet(props : any) {
                 }
             />
             <CardContent sx={{minWidth:1000}}>
-                <Typography variant="body2" color="text.secondary">
-                    {props.message}
-                </Typography>
+                <Kweet username={props.username} 
+                    post_time={props.post_time}
+                    message={props.message}/>
             </CardContent>
             <CardActions disableSpacing>
-                <FavoriteButton username={props.username} post_time={props.post_time}/>
-                <IconButton aria-label="share">
-                    <RotateRightIcon />
-                </IconButton>
                 <Typography variant="caption" color="text.secondary" sx={{paddingLeft:'10px'}}>
-                    {props.post_time}
+                    {props.rekweet_time}
                 </Typography>
             </CardActions>
         </Card>
