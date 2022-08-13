@@ -244,6 +244,23 @@ app.get("/api/rekweet/:info", (req,res)=>{
         else { data.status = 200 }
         data.body = result
         res.send(data)
+    });   
+});
+
+// Route to post kweet
+app.get("/api/postKweet/:info", (req,res)=>{
+    const request = JSON.parse(req.params.info);
+     db.query(`CALL post_kweet('${request.username}','${request.message}');`,
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400;
+        data.body = {message:err.sqlMessage}
+        }
+        else {
+            data.status = 200;
+        }
+        res.send(JSON.stringify(data))
         });   
 });
 

@@ -75,7 +75,6 @@ function Login(props: any) {
                         helper.setStorage('loggedIn', true)
                         helper.setStorage('user', params.username)
                         navigate('/')
-                        window.location.reload()
                     }
                     else {
                         updateAlert(res.data.body.message)

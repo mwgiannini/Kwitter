@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { getStorage, setStorage } from '../../helper';
+import { delStorage, getStorage, setStorage } from '../../helper';
 import Avatar from '@mui/material/Avatar';
 import UserCard from '../userCard';
 
@@ -27,6 +27,8 @@ export default function UserButton(props: any) {
 
     function logout() {
         setStorage('loggedIn', false);
+        delStorage('display user');
+        delStorage('user');
         window.location.reload();
     }
 
