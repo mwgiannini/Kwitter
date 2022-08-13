@@ -54,7 +54,7 @@ export default function NewKweetForm() {
         APIclient.postKweet(params).then((res) => {
             if (res.data.status === 200) {
                 Object.freeze(APIclient)
-                // window.location.reload()
+                setTimeout(() => {  window.location.reload() }, 2000);
                 setSuccess(true)
             }
             else {
@@ -90,9 +90,10 @@ export default function NewKweetForm() {
                 variant="filled"
                 onChange={handleChange} />
             <Button variant="contained" sx={{ margin: '10px' }} onClick={handlePost}>submit</Button>
-            <Snackbar open={success} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={success} autoHideDuration={2000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     Successfuly posted a kweet!
+                    You will be redirected in 2 seconds
                 </Alert>
             </Snackbar>
             <Snackbar open={fail} autoHideDuration={6000} onClose={handleClose}>
