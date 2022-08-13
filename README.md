@@ -72,3 +72,32 @@ Upon the page load, if you have not logged in, then the page will direct you to 
 
 </pre>
 ![](DemoImages/login.png)
+
+## Navbar
+The home icon on the navbar will bring you back to your timeline from any page.  
+
+The search bar can be used to find users to interact with. Try searching for the users in the table above!
+
+The user button will display the current user and a logout button when clicked.
+
+Tip: *click any user's name or profile picture to view that user's page.*
+
+<pre>
+
+</pre>
+![](DemoImages/homepage.png)
+
+## Timeline
+After logging in, you will be directed to your timeline. The timeline is a collection of all the posts and reposts of the users you are following in chronological order. Your posts will also appear on this screen.
+
+From this page, you can also write your first Kweet! Click the plus icon on the bottom of the page to begin writing.
+
+## User page
+The user page displays a user's posts, reposts, favorites, followers,  and followings. 
+
+On other's user pages, you can follow or unfollow the user with the button at the top of the screen
+
+<pre>
+
+</pre>
+![](DemoImages/userpage.png)
