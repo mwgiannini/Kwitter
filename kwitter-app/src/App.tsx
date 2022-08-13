@@ -11,7 +11,6 @@ import {
 import MenuAppBar from './components/navbar/navbar';
 import { getStorage } from './helper';
 import MainPage from './pages/mainPage';
-import Login from './components/login';
 import UserProfile from './pages/userProfile';
 import SignIn from './components/signIn';
 import SignUp from './components/signUp';
@@ -34,7 +33,6 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/userprofile" element={<UserProfile />} />
           </Route>
-          {/* <Route path='/login' element={<Login />} /> */}
           <Route path='/signIn' element={<SignIn />} />
           <Route path='/signUp' element={<SignUp />} />
         </Routes>
