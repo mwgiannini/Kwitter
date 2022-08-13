@@ -12,18 +12,17 @@ export default function UserCard(props : any) {
     function redirect() {
         setStorage('display user', props.username)
         navigate('/userprofile')
+        window.location.reload()
     }
 
     return (
-        <div onClick={redirect}>
-        <List sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}>
-            <ListItemButton sx={{padding:'5px', borderRadius: '2px'}}>
+        <List sx={{ padding: '5px', width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}>
+            <ListItemButton onClick={redirect} sx={{padding:'5px', borderRadius: '2px'}}>
                 <ListItemAvatar>
                     <ProfilePicture username={props.username}/>
                 </ListItemAvatar>
                 <Typography>{props.username}</Typography>
             </ListItemButton>
         </List>
-        </div>
     )
 }
