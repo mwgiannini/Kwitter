@@ -249,6 +249,21 @@ app.get("/api/postKweet/:info", (req,res)=>{
         });   
 });
 
+// Route to delete a kweet
+app.get("/api/deleteKweet/:info", (req,res)=>{
+    const props = JSON.parse(req.params.info);
+     db.query(`CALL delete_kweet('${props.username}', '${props.post_time}')`, 
+     (err,result)=>{
+        if(err) {
+        console.log(err)
+        data.status = 400
+        }
+        else { data.status = 200 }
+        data.body = result
+        res.send(data)
+        });   
+});
+
 app.listen(PORT, ()=>{
     console.log(`Server is running on ${PORT}`)
 })

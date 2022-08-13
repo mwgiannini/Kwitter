@@ -8,8 +8,11 @@ import Typography from '@mui/material/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteButton from './favoriteButton';
 import RekweetButton from './rekweetButton'
+import { getStorage } from '../../helper';
+import DeleteButton from './deleteButton';
 
 export default function Kweet(props : any) {
+    
     return (
         <Card>
             <CardHeader
@@ -30,6 +33,10 @@ export default function Kweet(props : any) {
             <CardActions disableSpacing>
                 <FavoriteButton username={props.username} post_time={props.post_time}/>
                 <RekweetButton username={props.username} post_time={props.post_time}/>
+                {getStorage('user')==props.username? 
+                <DeleteButton username={props.username} post_time={props.post_time}/>
+                :
+                <></>}
                 <Typography variant="caption" color="text.secondary" sx={{paddingLeft:'10px'}}>
                     {props.post_time}
                 </Typography>
