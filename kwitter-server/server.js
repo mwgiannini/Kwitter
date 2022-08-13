@@ -281,6 +281,7 @@ app.get("/api/postKweet/:info", (req,res)=>{
 
 // Route to delete a kweet
 app.get("/api/deleteKweet/:info", (req,res)=>{
+    let data = {status : Number, body : any=null}
     const props = JSON.parse(req.params.info);
      db.query(`CALL delete_kweet('${props.username}', '${props.post_time}')`, 
      (err,result)=>{
