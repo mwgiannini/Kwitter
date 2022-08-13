@@ -41,7 +41,7 @@ npm start
 
 To run the mySQL server, load the latest Dump file from the /kwitter-db/Dumps/ directory into mySQL workbench using the [server-> data import]
 
-  
+  **Make sure that the HOST variable in kwitter-app/src/APIclient.tsx is set to localhost**
   
   **Once all three servers are running, you can continue on to use the app @ http://localhost:3000**
   
