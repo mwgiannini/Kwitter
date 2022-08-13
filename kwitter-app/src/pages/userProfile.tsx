@@ -17,16 +17,14 @@ import CardActions from '@mui/material/CardActions';
 
 
 export default function UserProfile() {
-    const [user, setUser] = React.useState('')
     const [value, setValue] = React.useState(0);
     const [favorites, setFavorites] = React.useState<object[]>([])
     const [kweets, setKweets] = React.useState<object[]>([])
     const [rekweets, setRekweets] = React.useState<object[]>([])
 
-    React.useEffect(()=> {setUser(getStorage('display user')!)},[])
 
     const GetList = () => {
-        APIclient.getFavorites(user).then((res) => {
+        APIclient.getFavorites(getStorage('display user')!).then((res) => {
             if (res.status === 200) {
                 Object.freeze(APIclient)
                 setFavorites(res.data.body)
@@ -34,7 +32,7 @@ export default function UserProfile() {
             }
         })
 
-        APIclient.getUserKweets(user).then((res) => {
+        APIclient.getUserKweets(getStorage('display user')!).then((res) => {
             if (res.status === 200) {
                 Object.freeze(APIclient)
                 setKweets(res.data.body)
@@ -42,7 +40,7 @@ export default function UserProfile() {
             }
         })
 
-        APIclient.getRekweets(user).then((res) => {
+        APIclient.getRekweets(getStorage('display user')!).then((res) => {
             if (res.status === 200) {
                 Object.freeze(APIclient)
                 setRekweets(res.data.body)
@@ -110,7 +108,7 @@ export default function UserProfile() {
 
     return (
         <>
-            <UserCard username={user} />
+            <UserCard username={getStorage('display user')} />
             <Box
                 sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
             >
