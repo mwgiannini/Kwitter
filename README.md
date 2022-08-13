@@ -56,7 +56,7 @@ To run the mySQL server, load the latest Dump file from the /kwitter-db/Dumps/ d
 |username|  password|
 |--|--|
 | mw | murphy |
-|amor|vesper|
+|me_wang|vesper|
 |frank|123456|
 |tut_the_gut|password|
 |humphrey_dumpty|drowssap|
@@ -66,7 +66,9 @@ To run the mySQL server, load the latest Dump file from the /kwitter-db/Dumps/ d
 
   
 
-Upon the page load, if you have not logged in, then the page will direct you to the log in page. To create an account, click the signup button. Alternatively, log in the accounts above have posts, follows, 'rekweets', and likes already made.
+Upon the page load, if you have not logged in, then the page will direct you to the log in page. To create an account, click the signup button. Alternatively, the accounts above have posts, follows, 'rekweets', and likes already made.
+
+Tip *the user mw has the best data for demo purposes*
 
 <pre>
 
