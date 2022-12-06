@@ -1,9 +1,9 @@
 var mysql = require('mysql');
 
 var db = mysql.createConnection({
-    host: '192.168.0.19',
+    host: 'localhost',
     user: 'root',
-    password: '123456',
+    password: 'password',
     database: 'kwitterdb',
     timezone: 'utc'
 });
